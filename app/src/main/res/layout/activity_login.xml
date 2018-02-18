@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="18dp"
-            android:laytout_marginTop="10dp"
+            android:layout_marginTop="10dp"
             android:text="Create Account"
             android:id="@+id/registerButton"/>
 
