@@ -131,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if(success)
                             {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog = builder.setMessage("Signup Failed")
+                                dialog = builder.setMessage("Signup Successed")
                                         .setPositiveButton("OK", null)
                                         .create();
                                 dialog.show();
@@ -140,7 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
                             else
                             {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog = builder.setMessage("You cannot use this ID")
+                                dialog = builder.setMessage("Signup Failed")
                                         .setNegativeButton("OK", null)
                                         .create();
                                 dialog.show();
@@ -157,16 +157,6 @@ public class RegisterActivity extends AppCompatActivity {
                 queue.add(registerRequest);
             }
         });
-
-       /*TextView registerButton = (TextView) findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent daymenuIntent = new Intent(RegisterActivity.this, DayActivity.class);
-                RegisterActivity.this.startActivity(daymenuIntent);
-            }
-        });*/
     }
 
     @Override
