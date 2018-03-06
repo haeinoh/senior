@@ -1,5 +1,6 @@
 package hi.simpleexpensemanager;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -9,60 +10,29 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.roughike.bottombar.BottomBar;
+
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button todayButton = (Button) findViewById(R.id.todayButton);
-        final Button weekButton = (Button) findViewById(R.id.weekButton);
-        final Button monthButton = (Button) findViewById(R.id.monthButton);
-        final LinearLayout transaction = (LinearLayout) findViewById(R.id.transaction);
+        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar.setOnClickListener(new View.OnClickListener() {
 
-        todayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                transaction.setVisibility(View.GONE);
-                todayButton.setBackgroundColor(getResources().getColor(R.color.colorMenuDark));
-                weekButton.setBackgroundColor(getResources().getColor(R.color.colorMenuFragment));
-                monthButton.setBackgroundColor(getResources().getColor(R.color.colorMenuFragment));
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new TodayFragment());
-                fragmentTransaction.commit();
+                Intent weekIntent = new Intent(MainActivity.this, WeekActivity.class);
+                MainActivity.this.startActivity(weekIntent);
             }
         });
 
-        weekButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                transaction.setVisibility(View.GONE);
-                todayButton.setBackgroundColor(getResources().getColor(R.color.colorMenuFragment));
-                weekButton.setBackgroundColor(getResources().getColor(R.color.colorMenuDark));
-                monthButton.setBackgroundColor(getResources().getColor(R.color.colorMenuFragment));
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new WeekFragment());
-                fragmentTransaction.commit();
-            }
-        });
-
-        monthButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                transaction.setVisibility(View.GONE);
-                todayButton.setBackgroundColor(getResources().getColor(R.color.colorMenuFragment));
-                weekButton.setBackgroundColor(getResources().getColor(R.color.colorMenuFragment));
-                monthButton.setBackgroundColor(getResources().getColor(R.color.colorMenuDark));
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new MonthFragment());
-                fragmentTransaction.commit();
-            }
-        });
     }
+
+    /*
     private long lastTimeBackPressed;
 
     @Override
@@ -75,6 +45,6 @@ public class MainActivity extends AppCompatActivity {
         }
         Toast.makeText(this,"if you push the back button again, it will terminated", Toast.LENGTH_SHORT);
         lastTimeBackPressed = System.currentTimeMillis();
-    }
+    }*/
 
 }
