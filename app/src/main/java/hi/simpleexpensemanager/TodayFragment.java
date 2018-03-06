@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -57,6 +61,28 @@ public class TodayFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle b){
+        super.onActivityCreated(b);
+
+        //TextView currentTime = (TextView) findViewById(R.id.currentTime);
+        //String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        //TextView.setText(currentDateTimeString);
+
+    }
+
+    private long mNow;
+    private Date mDate;
+    SimpleDateFormat mFormat = new SimpleDateFormat("MM-dd");
+
+    private String getTime(){
+        mNow = System.currentTimeMillis();
+        mDate = new Date(mNow);
+        return mFormat.format(mDate);
+    }
+    private void setContentView(int activity_main) {
     }
 
     @Override
