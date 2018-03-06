@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,4 +63,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private long lastTimeBackPressed;
+
+    @Override
+    public void onBackPressed()
+    {   //clicke once, and click again within 1.5s
+        if(System.currentTimeMillis() - lastTimeBackPressed < 1500)
+        {
+            finish();
+            return;
+        }
+        Toast.makeText(this,"if you push the back button again, it will terminated", Toast.LENGTH_SHORT);
+        lastTimeBackPressed = System.currentTimeMillis();
+    }
+
 }
