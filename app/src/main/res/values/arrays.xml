@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="income">
+        <item>General Income</item>
+        <item>Salary</item>
+        <item>Investment</item>
+        <item>Buisness</item>
+        <item>Asset Withdrawal</item>
+        <item>Carried Over</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="expense">
+        <item>General Expense</item>
+        <item>Food</item>
+        <item>Clothing</item>
+        <item>Necessaries</item>
+        <item>Transportation</item>
+        <item>Education</item>
+        <item>Home</item>
+        <item>Utility Bills</item>
+        <item>Enteretainment</item>
+        <item>Insurance</item>
+        <item>Phone</item>
+        <item>Electronics</item>
+        <item>Beauty</item>
+        <item>Savings</item>
+        <item>Carried Over</item>
+        <item>Other</item>
+    </string-array>
+
+</resources>

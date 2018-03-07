@@ -84,18 +84,19 @@
                 android:background="@color/colorPrimary"/>
 
             <EditText
+                android:id="@+id/emailText"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/e_mail"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
+                android:drawableStart="@drawable/ic_mail_outline_black_24dp"
+                android:hint="@string/e_mail"
+                android:inputType="textEmailAddress"
                 android:padding="10dp"
                 android:textColor="#000000"
-                android:textColorHint="#1a1a1a"
-                android:id="@+id/emailText"
-                android:drawableStart="@drawable/ic_mail_outline_black_24dp"
-                android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"/>
+                android:textColorHint="#1a1a1a" />
 
             <Button
                 android:layout_width="280dp"

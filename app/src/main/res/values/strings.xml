@@ -12,4 +12,5 @@
     <string name="home">home</string>
     <string name="month">month</string>
     <string name="setting">setting</string>
+    <string name="title_activity_expense">ExpenseActivity</string>
 </resources>
