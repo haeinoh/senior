@@ -21,9 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="ADD INCOME"
+        android:text="@string/add_income"
         android:textColor="#000000"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:layout_marginTop="10dp"/>
     </LinearLayout>
@@ -34,18 +34,18 @@
         android:orientation="vertical">
 
         <EditText
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:hint="name"
-        android:layout_gravity="center"
-        android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#1a1a1a"
-        android:id="@+id/nameText"
-        android:drawableStart="@drawable/ic_create_black_24dp"
-        android:drawableLeft="@drawable/ic_create_black_24dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"/>
+            android:id="@+id/nameText"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:drawableLeft="@drawable/ic_create_black_24dp"
+            android:drawableStart="@drawable/ic_create_black_24dp"
+            android:hint="@string/name"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#1a1a1a" />
 
         <EditText
             android:id="@+id/amountText"
@@ -56,7 +56,7 @@
             android:background="@color/colorPrimary"
             android:drawableLeft="@drawable/ic_attach_money_black_24dp"
             android:drawableStart="@drawable/ic_attach_money_black_24dp"
-            android:hint="amount"
+            android:hint="@string/amount"
             android:inputType="number"
             android:padding="10dp"
             android:textColor="#000000"
@@ -72,11 +72,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Select Date"
+            android:hint="@string/select_date"
             android:id="@+id/selectDate"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <Button
             android:layout_width="280dp"
@@ -84,9 +84,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="70dp"
             android:background="@color/colorPrimaryDark"
-            android:text="SAVE"
+            android:text="@string/save"
             android:textColor="#000000"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:id="@+id/saveIncomeButton"/>
 

@@ -16,6 +16,7 @@ public class RegisterRequest extends StringRequest {
     private Map<String, String> parameters;
 
     public RegisterRequest(String userID, String userPassword, String userEmail, Response.Listener<String> listener){
+        //send data with hidden
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
         parameters.put("userID", userID); //each paramter will match
