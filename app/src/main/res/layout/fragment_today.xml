@@ -9,20 +9,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary">
+        <!-- at the begging of date -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="110dp"
             android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/colorPrimary"
+            android:layout_marginLeft="10dp"
             android:baselineAligned="false"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/yearLabel"
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="1.5dp"
                 android:paddingLeft="4dp"
                 android:background="@color/colorMenuGray"
                 android:text="2014"
@@ -33,18 +37,16 @@
                 android:id="@+id/monthLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
-                android:paddingLeft="3dp"
-                android:layout_marginTop="-26dp"
+                android:layout_marginLeft="54dp"
+                android:layout_marginTop="-25dp"
                 android:text="April"
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/dayLabel"
-                android:layout_width="100dp"
-                android:layout_height="65dp"
-                android:layout_marginLeft="10dp"
+                android:layout_width="110dp"
+                android:layout_height="70dp"
                 android:text="9"
                 android:gravity="center"
                 android:textColor="#000000"
@@ -55,12 +57,57 @@
                 android:id="@+id/weekLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="80dp"
-                android:paddingLeft="5dp"
+                android:layout_marginLeft="79dp"
+                android:paddingLeft="2dp"
                 android:layout_marginTop="-23dp"
                 android:text="Sat"
                 android:textColor="#000000"
                 android:textSize="13sp"/>
+        </LinearLayout> <!-- at the end of date -->
+
+        <!-- at the begging of budget -->
+        <LinearLayout
+                android:layout_width="243dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="15dp">
+
+            <TextView
+                android:layout_width="253dp"
+                android:layout_height="wrap_content"
+                android:text="Budget"
+                android:textSize="18dp"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:background="@color/colorMenuGray"/>
+
+                <TextView
+                    android:id="@+id/budgetValue"
+                    android:layout_width="253dp"
+                    android:layout_height="70dp"
+                    android:paddingLeft="17dp"
+                    android:paddingTop="15dp"
+                    android:text="$900"
+                    android:textColor="#000000"
+                    android:textSize="35sp"
+                    android:background="#ffffff"/>
+
+                <TextView
+                    android:id="@+id/currentPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="120dp"
+                    android:layout_marginTop="-65dp"
+                    android:background="#ffffff"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:text="60%"
+                    android:textColor="#000000"
+                    android:textSize="35sp" />
+            </LinearLayout>  <!-- at the end of budget -->
 
         </LinearLayout>
 
@@ -69,9 +116,10 @@
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:background="@color/colorMenuFragment"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -91,8 +139,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
+            android:gravity="center"
             android:background="@color/colorMenuFragment"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -103,7 +152,6 @@
                 android:textColor="#000000"
                 android:textSize="25sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
     </LinearLayout>
 
