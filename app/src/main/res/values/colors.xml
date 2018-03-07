@@ -5,7 +5,9 @@
     <color name="colorAccent">#546E7A</color>
     <color name="colorWarning">#bfbfbf</color>
     <color name="colorGray">#a6a6a6</color>
-    <color name="colorLightSkyBlue">#e6f7ff</color>
-    <color name="colorMenuFragment">#99c2ff</color>
+    <color name="colorMenuGray">#999999</color>
+    <color name="colorLightSkyBlue">#e6f0ff</color>
+    <color name="colorMenuBlue">#1ab2ff</color>
+    <color name="colorMenuFragment"> #ffe6e6</color>
     <color name="colorMenuDark">#3385ff</color>
 </resources>

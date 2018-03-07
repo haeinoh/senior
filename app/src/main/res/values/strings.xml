@@ -13,4 +13,12 @@
     <string name="month">month</string>
     <string name="setting">setting</string>
     <string name="title_activity_expense">ExpenseActivity</string>
+    <string name="_2018">2018</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="add_expense">ADD EXPENSE</string>
+    <string name="transaction">Transaction</string>
+    <string name="tue">TUE</string>
+    <string name="_6">6</string>
+    <string name="march">March</string>
+    <string name="add_income">ADD INCOME</string>
 </resources>
