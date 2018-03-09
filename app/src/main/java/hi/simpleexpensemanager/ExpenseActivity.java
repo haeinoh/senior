@@ -1,5 +1,6 @@
 package hi.simpleexpensemanager;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -8,9 +9,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -19,6 +28,12 @@ public class ExpenseActivity extends AppCompatActivity {
     private ArrayAdapter adapter;
     private Spinner spinner;
     private static final String TAG = "ExpenseActivity";
+
+    private String expenseName;
+    private Double expenseAmount;
+    private String expenseCategory;
+    private String expenseDate;
+    private AlertDialog dialog;
 
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -32,6 +47,9 @@ public class ExpenseActivity extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.expenseSpinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.expense, android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        final EditText nameText = (EditText) findViewById(R.id.nameText);
+        final EditText amountText = (EditText) findViewById(R.id.amountText);;
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,5 +79,62 @@ public class ExpenseActivity extends AppCompatActivity {
                 mDisplayDate.setText(date);
             }
         };
+
+        Button saveExpenseButton = (Button) findViewById(R.id.saveExpenseButton);
+        saveExpenseButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view){
+                String expenseName = nameText.getText().toString();
+                Double expenseAmount = Double.valueOf(amountText.getText().toString());
+                String expenseCategory = spinner.getSelectedItem().toString();
+                String expenseDate = mDisplayDate.getText().toString();
+
+               /*if(expenseName.equals("") || expenseAmount.equals("") || expenseCategory.equals("") || expenseDate.equals(""))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ExpenseActivity.this);
+                    dialog = builder.setMessage("Blank is not allowed")
+                            .setNegativeButton("OK", null)
+                            .create();
+                    dialog.show();
+                    return;
+                }*/
+                Response.Listener<String> responseListener = new Response.Listener<String>(){
+
+                    @Override
+                    public void onResponse(String response) {
+                        try
+                        {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if(success)
+                            {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ExpenseActivity.this);
+                                dialog = builder.setMessage("Saved successfully")
+                                        .setPositiveButton("OK", null)
+                                        .create();
+                                dialog.show();
+                                finish();
+                            }
+                            else
+                            {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ExpenseActivity.this);
+                                dialog = builder.setMessage("Failed to save")
+                                        .setNegativeButton("OK", null)
+                                        .create();
+                                dialog.show();
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                AddExpense addExpense = new AddExpense(expenseName, expenseAmount, expenseCategory, expenseDate, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(ExpenseActivity.this);
+                queue.add(addExpense);
+            }
+        });
     }
 }

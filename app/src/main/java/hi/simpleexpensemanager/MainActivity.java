@@ -62,7 +62,7 @@ public class MainActivity extends FragmentActivity {
         transaction.commit();
     }
 
-    /*
+
     private long lastTimeBackPressed;
 
     @Override
@@ -75,6 +75,6 @@ public class MainActivity extends FragmentActivity {
         }
         Toast.makeText(this,"if you push the back button again, it will terminated", Toast.LENGTH_SHORT);
         lastTimeBackPressed = System.currentTimeMillis();
-    }*/
+    }
 
 }

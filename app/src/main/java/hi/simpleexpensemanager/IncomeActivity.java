@@ -30,7 +30,7 @@ public class IncomeActivity extends AppCompatActivity {
     private Spinner spinner;
     //from AddIncome
     private String incomeName;
-    private String incomeAmount;
+    private Double incomeAmount;
     private String incomeCategory;
     private String incomeDate;
     private AlertDialog dialog;
@@ -91,11 +91,11 @@ public class IncomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 String incomeName = nameText.getText().toString();
-                String incomeAmount = amountText.getText().toString();
+                Double incomeAmount = Double.valueOf(amountText.getText().toString());
                 String incomeCategory = spinner.getSelectedItem().toString();
                 String incomeDate = mDisplayDate.getText().toString();
 
-               /* if(incomeName.equals("") || incomeAmount.equals("") || incomeCategory.equals("") || incomeDate.equals(""))
+                /*if(incomeName.equals("") || incomeAmount.equals("") || incomeCategory.equals("") || incomeDate.equals(""))
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(IncomeActivity.this);
                     dialog = builder.setMessage("Blank is not allowed")

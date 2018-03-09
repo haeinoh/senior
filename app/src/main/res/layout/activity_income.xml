@@ -57,7 +57,7 @@
             android:drawableLeft="@drawable/ic_attach_money_black_24dp"
             android:drawableStart="@drawable/ic_attach_money_black_24dp"
             android:hint="@string/amount"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:padding="10dp"
             android:textColor="#000000"
             android:textColorHint="#1a1a1a" />
