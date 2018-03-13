@@ -34,7 +34,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:background="@color/colorLightSkyBlue"
+            android:background="@color/colorMenuFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -48,7 +48,7 @@
             android:drawableRight="@drawable/ic_create_black_24dp"/>
 
         <TextView
-            android:background="@color/colorLightSkyBlue"
+            android:background="@color/colorMenuFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -62,7 +62,7 @@
             android:drawableRight="@drawable/ic_create_black_24dp"/>
 
         <TextView
-            android:background="@color/colorLightSkyBlue"
+            android:background="@color/colorMenuFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"

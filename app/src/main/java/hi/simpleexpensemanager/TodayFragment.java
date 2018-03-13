@@ -64,7 +64,7 @@ public class TodayFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_today, container, false);
 
-        //incomeListView = (ListView) v.findViewById(R.id.incomeListView);
+        /*incomeListView = (ListView) v.findViewById(R.id.incomeListView);
         incomeList = new ArrayList<Income>();
 
         incomeList.add(new Income("This is test income", "55", "Salary", "3/10/2018"));
@@ -73,7 +73,8 @@ public class TodayFragment extends Fragment {
 
         adapter = new IncomeListAdapter(getContext(), incomeList);
         incomeListView.setAdapter(adapter);
-
+*/
+        //Calendar - do not remove it
         TextView yearLabel = (TextView)v.findViewById(R.id.yearLabel);
         TextView monthLabel = (TextView)v.findViewById(R.id.monthLabel);
         TextView dayLabel = (TextView)v.findViewById(R.id.dayLabel);
@@ -92,6 +93,7 @@ public class TodayFragment extends Fragment {
         monthLabel.setText(values[1]);
         dayLabel.setText(values[2]);
         weekLabel.setText(values[3]);
+        // the end of Calendar
 
         Button addIncomeButton = (Button) v.findViewById(R.id.addIncomeButton);
         addIncomeButton.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +116,7 @@ public class TodayFragment extends Fragment {
         });
         return v;
     }
-
+/*
     class BackgroundTask extends AsyncTask<Void, Void, String>
     {
         String incomeTarget;
@@ -176,5 +178,5 @@ public class TodayFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 }
