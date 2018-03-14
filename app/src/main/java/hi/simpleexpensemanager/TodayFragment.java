@@ -3,7 +3,9 @@ package hi.simpleexpensemanager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,7 @@ import java.util.Locale;
  * Use the {@link TodayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodayFragment extends Fragment {
+public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelected {
 
     public TodayFragment() {
         // Required empty public constructor
@@ -43,7 +45,16 @@ public class TodayFragment extends Fragment {
     private ListView incomeListView;
     private IncomeListAdapter adapter;
     private List<Income> incomeList;
-/*
+
+    private static final String TAG = "TodayFragment";
+
+
+    public void sendInput(String input){
+        Log.d(TAG, "sendInput: from budgetsettng: " + input);
+        mBudgetValue.setText(input);
+    }
+    public TextView mBudgetValue;
+    /*
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +70,7 @@ public class TodayFragment extends Fragment {
         incomeListView.setAdapter(adapter);
     }
 */
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -94,6 +106,20 @@ public class TodayFragment extends Fragment {
         dayLabel.setText(values[2]);
         weekLabel.setText(values[3]);
         // the end of Calendar
+
+        //budgetSetting
+        mBudgetValue = v.findViewById(R.id.budgetValue);
+        Button budgetSetting = (Button) v.findViewById(R.id.budgetSetting);
+        budgetSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: opening dialog");
+
+                BudgetDialog dialog = new BudgetDialog();
+                dialog.setTargetFragment(TodayFragment.this, 1);
+                dialog.show(getFragmentManager(), "BudgetDialog");
+            }
+        });
 
         Button addIncomeButton = (Button) v.findViewById(R.id.addIncomeButton);
         addIncomeButton.setOnClickListener(new View.OnClickListener() {

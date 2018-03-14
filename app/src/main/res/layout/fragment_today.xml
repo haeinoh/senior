@@ -11,14 +11,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="100dp"
         android:orientation="horizontal"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary">
         <!-- at the begging of date -->
         <LinearLayout
             android:layout_width="110dp"
-            android:layout_height="100dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:baselineAligned="false"
             android:orientation="vertical">
@@ -65,32 +65,54 @@
                 android:textSize="13sp"/>
         </LinearLayout> <!-- at the end of date -->
 
-        <!-- at the begging of budget -->
+        <!-- at the begging budget -->
         <LinearLayout
                 android:layout_width="243dp"
-                android:layout_height="100dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical"
                 android:layout_marginLeft="15dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="253dp"
-                android:layout_height="wrap_content"
-                android:text="Budget"
-                android:textSize="18dp"
-                android:textColor="#ffffff"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:background="@color/colorMenuGray"/>
+                android:layout_height="25dp"
+                android:background="@color/colorMenuGray"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BUDGET"
+                    android:textSize="18dp"
+                    android:textColor="#ffffff"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
+
+                <Button
+                    android:id="@+id/budgetSetting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:background="@android:color/transparent"
+                    android:text="Setting"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="253dp"
+                android:layout_height="70dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/budgetValue"
-                    android:layout_width="253dp"
-                    android:layout_height="70dp"
-                    android:paddingLeft="17dp"
-                    android:paddingTop="15dp"
-                    android:text="$900"
+                    android:layout_width="90dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="$"
                     android:textColor="#000000"
                     android:textSize="35sp"
                     android:background="#ffffff"/>
@@ -99,14 +121,15 @@
                     android:id="@+id/currentPercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="120dp"
-                    android:layout_marginTop="-65dp"
                     android:background="#ffffff"
-                    android:paddingLeft="20dp"
+                    android:layout_marginLeft="30dp"
                     android:paddingTop="10dp"
                     android:text="60%"
                     android:textColor="#000000"
                     android:textSize="35sp" />
+
+            </LinearLayout>
+
             </LinearLayout>  <!-- at the end of budget -->
 
         </LinearLayout>
@@ -156,7 +179,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="120dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
