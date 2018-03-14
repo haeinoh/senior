@@ -10,4 +10,5 @@
     <color name="colorMenuBlue">#1ab2ff</color>
     <color name="colorMenuFragment"> #ffe6e6</color>
     <color name="colorMenuDark">#3385ff</color>
+    <color name="colorBudget">#0047b3</color>
 </resources>

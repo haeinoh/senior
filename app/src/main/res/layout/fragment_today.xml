@@ -75,58 +75,71 @@
                 android:layout_marginLeft="15dp">
 
             <LinearLayout
-                android:layout_width="253dp"
-                android:layout_height="25dp"
-                android:background="@color/colorMenuGray"
+                android:layout_width="233dp"
+                android:layout_height="45dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:text="BUDGET"
-                    android:textSize="18dp"
-                    android:textColor="#ffffff"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"/>
-
-                <Button
-                    android:id="@+id/budgetSetting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="30dp"
-                    android:background="@android:color/transparent"
-                    android:text="Setting"
-                    android:textColor="#ffffff"
-                    android:textSize="18dp" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="253dp"
-                android:layout_height="70dp"
-                android:background="#ffffff"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/budgetValue"
-                    android:layout_width="90dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_height="wrap_content"
-                    android:text="$"
-                    android:textColor="#000000"
-                    android:textSize="35sp"
-                    android:background="#ffffff"/>
+                    android:text="@string/of_budget"
+                    android:textSize="20dp"
+                    android:gravity="left"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorBudget"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/currentPercent"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#ffffff"
-                    android:layout_marginLeft="30dp"
-                    android:paddingTop="10dp"
-                    android:text="60%"
+                    android:layout_height="match_parent"
+                    android:text="60"
                     android:textColor="#000000"
                     android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/budgetTestPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="%"
+                    android:textColor="#000000"
+                    android:textSize="35sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="233dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/budgetSetting"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-10dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="left"
+                    android:text="Set Budget"
+                    android:textSize="18dp"
+                    android:textColor="@color/colorBudget"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/budgetTest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="$"
+                    android:textColor="#000000"
+                    android:textSize="35sp"/>
+
+                <TextView
+                    android:id="@+id/budgetValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="35sp"/>
 
             </LinearLayout>
 
