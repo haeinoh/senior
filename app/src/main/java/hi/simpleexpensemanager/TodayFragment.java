@@ -54,38 +54,13 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         mBudgetValue.setText(input);
     }
     public TextView mBudgetValue;
-    /*
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        incomeListView = (ListView) getView().findViewById(R.id.incomeListView);
-        incomeList = new ArrayList<Income>();
-
-        incomeList.add(new Income("This is test income", "55", "Salary", "3/10/2018"));
-        incomeList.add(new Income("This is test income", "55", "Salary", "3/10/2018"));
-        incomeList.add(new Income("This is test income", "55", "Salary", "3/10/2018"));
-
-        adapter = new IncomeListAdapter(getContext(), incomeList);
-        incomeListView.setAdapter(adapter);
-    }
-*/
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_today, container, false);
 
-        /*incomeListView = (ListView) v.findViewById(R.id.incomeListView);
-        incomeList = new ArrayList<Income>();
-
-        incomeList.add(new Income("This is test income", "55", "Salary", "3/10/2018"));
-        incomeList.add(new Income("This is test income", "55", "Salary", "3/10/2018"));
-        incomeList.add(new Income("This is test income", "55", "Salary", "3/10/2018"));
-
-        adapter = new IncomeListAdapter(getContext(), incomeList);
-        incomeListView.setAdapter(adapter);
-*/
         //Calendar - do not remove it
         TextView yearLabel = (TextView)v.findViewById(R.id.yearLabel);
         TextView monthLabel = (TextView)v.findViewById(R.id.monthLabel);
@@ -93,7 +68,7 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         TextView weekLabel = (TextView)v.findViewById(R.id.weekLabel);
 
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MMMM/d/E", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MMMM/dd/E", Locale.US);
         String strDate = sdf.format(cal.getTime());
 
         String[] values = strDate.split("/",0);
@@ -106,6 +81,12 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         dayLabel.setText(values[2]);
         weekLabel.setText(values[3]);
         // the end of Calendar
+
+       /* incomeListView = (ListView) getView().findViewById(R.id.incomeListView);
+        incomeList = new ArrayList<Income>();
+        adapter = new IncomeListAdapter(getContext().getApplicationContext(), incomeList);
+        incomeListView.setAdapter(adapter);
+        */
 
         //budgetSetting
         mBudgetValue = v.findViewById(R.id.budgetValue);
@@ -185,21 +166,23 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         @Override //result
         public void onPostExecute(String result){
             try{
+                incomeList.clear();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
                 String incomeName, incomeAmount, incomeCategory, incomeDate;
                 while(count < jsonArray.length())
-                {
+                {   //current array element
                     JSONObject object = jsonArray.getJSONObject(count);
                     incomeName = object.getString("incomeName");
                     incomeAmount = object.getString("incomeAmount");
                     incomeCategory = object.getString("incomeCategory");
                     incomeDate = object.getString("incomeDate");
                     Income income = new Income(incomeName, incomeAmount, incomeCategory, incomeDate);
-                    //IncomeList.add(income);
+                    incomeList.add(income);
                     count++;
                 }
+                adapter.notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -1,6 +1,7 @@
 package hi.simpleexpensemanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,8 +35,27 @@ public class SettingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting, container, false);
+        View v = inflater.inflate(R.layout.fragment_setting, container, false);
 
-        return view;
+        Button addIncomeButton = (Button) v.findViewById(R.id.IncomeCategoryButton);
+        addIncomeButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent inCategoryIntent = new Intent(getActivity(), IncomeCategory.class);
+                startActivity(inCategoryIntent);
+            }
+        });
+
+        Button addExpenseButton = (Button) v.findViewById(R.id.ExpenseCategoryButton);
+        addExpenseButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent exCategoryIntent = new Intent(getActivity(), ExpenseCategory.class);
+                startActivity(exCategoryIntent);
+            }
+        });
+        return v;
     }
 }

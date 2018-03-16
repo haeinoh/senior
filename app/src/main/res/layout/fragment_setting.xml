@@ -34,6 +34,7 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/IncomeCategoryButton"
             android:background="@color/colorMenuFragment"
             android:layout_width="match_parent"
             android:layout_height="35dp"
@@ -48,6 +49,7 @@
             android:drawableRight="@drawable/ic_create_black_24dp"/>
 
         <Button
+            android:id="@+id/ExpenseCategoryButton"
             android:background="@color/colorMenuFragment"
             android:layout_width="match_parent"
             android:layout_height="35dp"

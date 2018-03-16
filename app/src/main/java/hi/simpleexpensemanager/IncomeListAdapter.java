@@ -43,6 +43,7 @@ public class IncomeListAdapter extends BaseAdapter{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v = View.inflate(context, R.layout.income, null);
+
         TextView incomeDateText = (TextView) v.findViewById(R.id.incomeDateText);
         TextView incomeCategoryText = (TextView) v.findViewById(R.id.incomeCategoryText);
         TextView incomeNameText = (TextView) v.findViewById(R.id.incomeNameText);

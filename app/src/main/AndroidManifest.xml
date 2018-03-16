@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hi.simpleexpensemanager">
-    <!--internet connection setting -->
+
+    <!-- internet connection setting -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -21,7 +22,9 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".IncomeActivity" />
-        <activity android:name=".ExpenseActivity"></activity>
+        <activity android:name=".ExpenseActivity" />
+        <activity android:name=".IncomeCategory" />
+        <activity android:name=".ExpenseCategory"></activity>
     </application>
 
 </manifest>

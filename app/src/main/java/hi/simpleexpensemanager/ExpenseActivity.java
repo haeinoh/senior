@@ -21,7 +21,9 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class ExpenseActivity extends AppCompatActivity {
 
@@ -72,10 +74,15 @@ public class ExpenseActivity extends AppCompatActivity {
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
+                //month = month + 1;
+                year = year - 1900;
+                //Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
+                Date d = new Date(year, month, day);
+                SimpleDateFormat dateFormatter = new SimpleDateFormat(
+                        "MM/dd/yyyy");
+                String date = dateFormatter.format(d);
 
-                String date = month + "/" + day + "/" + year;
+                //String date = month + "/" + day + "/" + year;
                 mDisplayDate.setText(date);
             }
         };
