@@ -28,6 +28,21 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:minDate="03/16/2018"
+                android:maxDate="12/31/2018"
+                android:layout_weight="1" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

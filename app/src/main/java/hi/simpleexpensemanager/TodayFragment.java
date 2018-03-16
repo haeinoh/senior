@@ -46,6 +46,10 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
     private IncomeListAdapter adapter;
     private List<Income> incomeList;
 
+    private ListView expenseListView;
+    private ExpenseListAdapter adapter2;
+    private List<Expense> expenseList;
+
     private static final String TAG = "TodayFragment";
 
 
@@ -55,7 +59,7 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
     }
     public TextView mBudgetValue;
 
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,12 +85,30 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         dayLabel.setText(values[2]);
         weekLabel.setText(values[3]);
         // the end of Calendar
-
-       /* incomeListView = (ListView) getView().findViewById(R.id.incomeListView);
+    //income list view
+        incomeListView = (ListView) v.findViewById(R.id.incomeListView);
         incomeList = new ArrayList<Income>();
+
+        incomeList.add(new Income("Incomename", "$100", "General", "02/05/2018"));
+        incomeList.add(new Income("Incomename", "$150", "Other", "03/02/2018"));
+        incomeList.add(new Income("Incomename", "$200", "General", "03/10/2018"));
+        incomeList.add(new Income("Incomename", "$250", "Business", "03/14/2018"));
+        incomeList.add(new Income("Incomename", "$300", "General", "03/16/2018"));
+
         adapter = new IncomeListAdapter(getContext().getApplicationContext(), incomeList);
         incomeListView.setAdapter(adapter);
-        */
+    //expense list view
+        expenseListView = (ListView) v.findViewById(R.id.expenseListView);
+        expenseList = new ArrayList<Expense>();
+
+        expenseList.add(new Expense("Expensename", "$300", "Utility", "01/05/2018"));
+        expenseList.add(new Expense("Expensename", "$700", "Home", "02/10/2018"));
+        expenseList.add(new Expense("Expensename", "$70", "Phone", "03/07/2018"));
+        expenseList.add(new Expense("Expensename", "$50", "Food", "03/10/2018"));
+        expenseList.add(new Expense("Expensename", "$120", "Education", "03/16/2018"));
+
+        adapter2 = new ExpenseListAdapter(getContext().getApplicationContext(), expenseList);
+        expenseListView.setAdapter(adapter2);
 
         //budgetSetting
         mBudgetValue = v.findViewById(R.id.budgetValue);
@@ -123,7 +145,7 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         });
         return v;
     }
-/*
+
     class BackgroundTask extends AsyncTask<Void, Void, String>
     {
         String incomeTarget;
@@ -187,5 +209,5 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
                 e.printStackTrace();
             }
         }
-    }*/
+    }
 }

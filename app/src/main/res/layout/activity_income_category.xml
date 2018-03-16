@@ -33,7 +33,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:background="@color/colorMenuFragment"
+        android:background="@color/colorCurrent"
         android:orientation="horizontal">
 
         <ListView
