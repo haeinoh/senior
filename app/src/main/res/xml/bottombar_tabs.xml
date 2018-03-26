@@ -5,7 +5,7 @@
         <tab
             id="@+id/menu_home"
             icon="@drawable/ic_account_balance_black_24dp"
-            title="TODAY"
+            title="HOME"
             activeColor="@color/colorMenuDark"/>
 
         <tab

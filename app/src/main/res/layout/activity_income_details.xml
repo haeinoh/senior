@@ -43,7 +43,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="380dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -58,6 +58,30 @@
                 android:divider="#ffffff"
                 android:dividerHeight="3dp">
             </ListView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Total Income: $"
+                android:textSize="17dp"
+                android:textColor="#009933"/>
+
+            <TextView
+                android:id="@+id/totalIncomeValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="from database"
+                android:textColor="#009933"
+                android:textSize="17sp"/>
 
         </LinearLayout>
 
