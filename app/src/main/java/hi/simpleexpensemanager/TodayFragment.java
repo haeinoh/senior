@@ -42,10 +42,6 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         // Required empty public constructor
     }
 
-    private ListView incomeListView;
-    private IncomeListAdapter adapter;
-    private List<Income> incomeList;
-
     private ListView expenseListView;
     private ExpenseListAdapter adapter2;
     private List<Expense> expenseList;
@@ -85,27 +81,16 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         dayLabel.setText(values[2]);
         weekLabel.setText(values[3]);
         // the end of Calendar
-    //income list view
-        incomeListView = (ListView) v.findViewById(R.id.incomeListView);
-        incomeList = new ArrayList<Income>();
 
-        incomeList.add(new Income("Incomename", "$100", "General", "02/05/2018"));
-        incomeList.add(new Income("Incomename", "$150", "Other", "03/02/2018"));
-        incomeList.add(new Income("Incomename", "$200", "General", "03/10/2018"));
-        incomeList.add(new Income("Incomename", "$250", "Business", "03/14/2018"));
-        incomeList.add(new Income("Incomename", "$300", "General", "03/16/2018"));
-
-        adapter = new IncomeListAdapter(getContext().getApplicationContext(), incomeList);
-        incomeListView.setAdapter(adapter);
     //expense list view
         expenseListView = (ListView) v.findViewById(R.id.expenseListView);
         expenseList = new ArrayList<Expense>();
 
-        expenseList.add(new Expense("Expensename", "$300", "Utility", "01/05/2018"));
-        expenseList.add(new Expense("Expensename", "$700", "Home", "02/10/2018"));
-        expenseList.add(new Expense("Expensename", "$70", "Phone", "03/07/2018"));
-        expenseList.add(new Expense("Expensename", "$50", "Food", "03/10/2018"));
-        expenseList.add(new Expense("Expensename", "$120", "Education", "03/16/2018"));
+        //expenseList.add(new Expense("Expensename", "$300", "Utility", "01/05/2018"));
+        //expenseList.add(new Expense("Expensename", "$700", "Home", "02/10/2018"));
+        //expenseList.add(new Expense("Expensename", "$70", "Phone", "03/07/2018"));
+        //expenseList.add(new Expense("Expensename", "$50", "Food", "03/10/2018"));
+        //expenseList.add(new Expense("Expensename", "$120", "Education", "03/16/2018"));
 
         adapter2 = new ExpenseListAdapter(getContext().getApplicationContext(), expenseList);
         expenseListView.setAdapter(adapter2);
@@ -121,6 +106,16 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
                 BudgetDialog dialog = new BudgetDialog();
                 dialog.setTargetFragment(TodayFragment.this, 1);
                 dialog.show(getFragmentManager(), "BudgetDialog");
+            }
+        });
+
+        Button incomeDetailsButton = (Button) v.findViewById(R.id.incomeDetailsButton);
+        incomeDetailsButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent incomeDetails = new Intent(getActivity(), IncomeDetails.class);
+                startActivity(incomeDetails);
             }
         });
 
@@ -143,27 +138,30 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
                 startActivity(expenseIntent);
             }
         });
+        //access database
+        new BackgroundTask().execute();
         return v;
     }
 
     class BackgroundTask extends AsyncTask<Void, Void, String>
     {
-        String incomeTarget;
+        String expenseTarget;
 
         @Override
         protected void onPreExecute()
         {
-            incomeTarget = "http://greenohi.cafe24.com/IncomeList.php";
+            expenseTarget = "http://greenohi.cafe24.com/ExpenseList.php";
         }
 
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL(incomeTarget);
+                URL url = new URL(expenseTarget);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                //save result
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                //read one by one and store into temp
+                //read buffer one by one and store into temp (string)
                 String temp;
                 StringBuilder stringBuilder = new StringBuilder();
                 while ((temp = bufferedReader.readLine()) != null)
@@ -188,23 +186,23 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         @Override //result
         public void onPostExecute(String result){
             try{
-                incomeList.clear();
+                expenseList.clear();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
-                String incomeName, incomeAmount, incomeCategory, incomeDate;
+                String expenseName, expenseAmount, expenseCategory, expenseDate;
                 while(count < jsonArray.length())
                 {   //current array element
                     JSONObject object = jsonArray.getJSONObject(count);
-                    incomeName = object.getString("incomeName");
-                    incomeAmount = object.getString("incomeAmount");
-                    incomeCategory = object.getString("incomeCategory");
-                    incomeDate = object.getString("incomeDate");
-                    Income income = new Income(incomeName, incomeAmount, incomeCategory, incomeDate);
-                    incomeList.add(income);
+                    expenseName = object.getString("expenseName");
+                    expenseAmount = object.getString("expenseAmount");
+                    expenseCategory = object.getString("expenseCategory");
+                    expenseDate = object.getString("expenseDate");
+                    Expense expense = new Expense(expenseName, expenseAmount, expenseCategory, expenseDate);
+                    expenseList.add(expense);
                     count++;
                 }
-                adapter.notifyDataSetChanged();
+                adapter2.notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
             }
