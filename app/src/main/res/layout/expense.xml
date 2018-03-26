@@ -37,7 +37,7 @@
         android:background="@color/colorPrimary">
 
         <TextView
-            android:layout_width="250dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:text="expenseName"
             android:layout_gravity="left"
@@ -45,6 +45,17 @@
             android:layout_marginLeft="5dp"
             android:textColor="#000000"
             android:id="@+id/expenseNameText"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$"
+            android:layout_gravity="right"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:id="@+id/expenseDollarSign"/>
 
         <TextView
             android:layout_width="wrap_content"

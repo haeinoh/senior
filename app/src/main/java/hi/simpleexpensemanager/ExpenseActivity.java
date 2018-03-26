@@ -32,7 +32,7 @@ public class ExpenseActivity extends AppCompatActivity {
     private static final String TAG = "ExpenseActivity";
 
     private String expenseName;
-    private Double expenseAmount;
+    private String expenseAmount;
     private String expenseCategory;
     private String expenseDate;
     private AlertDialog dialog;
@@ -93,7 +93,7 @@ public class ExpenseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 String expenseName = nameText.getText().toString();
-                Double expenseAmount = Double.valueOf(amountText.getText().toString());
+                String expenseAmount = amountText.getText().toString();
                 String expenseCategory = spinner.getSelectedItem().toString();
                 String expenseDate = mDisplayDate.getText().toString();
 

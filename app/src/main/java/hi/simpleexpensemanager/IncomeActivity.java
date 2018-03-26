@@ -32,7 +32,7 @@ public class IncomeActivity extends AppCompatActivity {
     private Spinner spinner;
     //from AddIncome
     private String incomeName;
-    private Double incomeAmount;
+    private String incomeAmount;
     private String incomeCategory;
     private String incomeDate;
     private AlertDialog dialog;
@@ -98,7 +98,7 @@ public class IncomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 String incomeName = nameText.getText().toString();
-                Double incomeAmount = Double.valueOf(amountText.getText().toString());
+                String incomeAmount = amountText.getText().toString();
                 String incomeCategory = spinner.getSelectedItem().toString();
                 String incomeDate = mDisplayDate.getText().toString();
 
