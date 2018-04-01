@@ -17,7 +17,12 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -35,6 +40,35 @@ public class WeekFragment extends Fragment {
     public WeekFragment() {
         // Required empty public constructor
     }
+    LineChart lineChart;
+
+    private ArrayList<String> getXAxisValues()
+    {
+        ArrayList<String> labels = new ArrayList<String>();
+        labels.add("MON");
+        labels.add("TUE");
+        labels.add("WED");
+        labels.add("THU");
+        labels.add("FRI");
+        labels.add("SAT");
+        labels.add("SUN");
+
+        return labels;
+    }
+
+    public class MyValueFormatter implements IValueFormatter{
+        private DecimalFormat mFormat;
+
+        public MyValueFormatter(){
+            mFormat = new DecimalFormat("###,###,###0.0"); //use one decimal
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler){
+
+            return "$"+mFormat.format(value);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,29 +76,28 @@ public class WeekFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_week, container, false);
 
-        LineChart lineChart = (LineChart) v.findViewById(R.id.chart);
+        //Data set
+        lineChart = (LineChart) v.findViewById(R.id.chart);
 
         ArrayList<Entry> entries = new ArrayList<>();
+        entries.add(new Entry(0,37));
+        entries.add(new Entry(1,18));
+        entries.add(new Entry(2,150));
+        entries.add(new Entry(3,45));
+        entries.add(new Entry(4,10));
+        entries.add(new Entry(5,99));
+        entries.add(new Entry(6,78));
 
-        entries.add(new Entry(1, 1));
-        entries.add(new Entry(2,2));
-        entries.add(new Entry(3,5));
-        entries.add(new Entry(4,3));
-        entries.add(new Entry(5,1));
-        entries.add(new Entry(6,2));
-        entries.add(new Entry(7,3));
-
+        //x-axis label
         LineDataSet lineDataSet = new LineDataSet(entries, "$");
 
-       /* ArrayList<String> labels = new ArrayList<String>();
-        labels.add("SUN");
-        labels.add("MON");
-        labels.add("TUE");
-        labels.add("WED");
-        labels.add("THU");
-        labels.add("FRI");
-        labels.add("SAT");
-        */
+        LineData lineData = new LineData(lineDataSet);
+        lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        lineChart.setData(lineData); //set the data and list of labels into chart
+
+        lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
+
+        //set circle
         lineDataSet.setLineWidth(2);
         lineDataSet.setCircleRadius(6);
         lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
@@ -73,33 +106,33 @@ public class WeekFragment extends Fragment {
 
         lineDataSet.setDrawCircleHole(true);
         lineDataSet.setDrawCircles(true);
-        lineDataSet.setDrawHorizontalHighlightIndicator(false);
-        lineDataSet.setDrawHighlightIndicators(false);
-        lineDataSet.setDrawValues(false);
+        lineDataSet.setValueTextSize(10);
+        lineDataSet.setValueFormatter(new MyValueFormatter());
 
-        LineData lineData = new LineData(lineDataSet);
-        lineChart.setData(lineData);
-
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(Color.BLACK);
-        xAxis.enableGridDashedLine(8, 24, 0);
-
+        //set y-axis
         YAxis yLAxis = lineChart.getAxisLeft();
         yLAxis.setTextColor(Color.BLACK);
-
+        //only left
         YAxis yRAxis = lineChart.getAxisRight();
         yRAxis.setDrawLabels(false);
         yRAxis.setDrawAxisLine(false);
         yRAxis.setDrawGridLines(false);
+       /*
+        lineDataSet.setDrawHorizontalHighlightIndicator(false);
+        lineDataSet.setDrawHighlightIndicators(false);
+        lineDataSet.setDrawValues(false);
 
-        Description description = new Description();
-        description.setText("");
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextColor(Color.BLACK);
+        xAxis.enableGridDashedLine(24, 24, 0);
+ */
+
+        lineChart.getDescription().setEnabled(false);
 
         lineChart.setDoubleTapToZoomEnabled(false);
         lineChart.setDrawGridBackground(false);
-        lineChart.setDescription(description);
-        lineChart.animateY(2000, Easing.EasingOption.EaseInCubic);
+        lineChart.animateY(1000, Easing.EasingOption.EaseInCubic);
         lineChart.invalidate();
 
         return v;

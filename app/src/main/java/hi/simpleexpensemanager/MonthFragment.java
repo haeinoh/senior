@@ -56,29 +56,42 @@ public class MonthFragment extends Fragment {
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleColor(Color.TRANSPARENT);
         pieChart.setHoleRadius(30f);
-        //pieChart.setTransparentCircleRadius(61f);
+        pieChart.setTransparentCircleRadius(0);
 
         ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
 
-            yvalues.add(new PieEntry(8f, "Category 1"));
-            yvalues.add(new PieEntry(15f, "Category 2"));
-            yvalues.add(new PieEntry(12f, "Category 3"));
-            yvalues.add(new PieEntry(25f, "Category 4"));
-            yvalues.add(new PieEntry(23f, "Category 5"));
-            yvalues.add(new PieEntry(17f, "Category 6"));
+            yvalues.add(new PieEntry(6f, "Utility"));
+            yvalues.add(new PieEntry(15f, "Education"));
+            yvalues.add(new PieEntry(12f, "Clothing"));
+            yvalues.add(new PieEntry(7f,  "Savings"));
+            yvalues.add(new PieEntry(27f, "Food"));
+            yvalues.add(new PieEntry(13f, "Home"));
+            yvalues.add(new PieEntry(7f, "Entertainment"));
 
-        PieDataSet dataSet = new PieDataSet(yvalues,"Categories");
+        PieDataSet dataSet = new PieDataSet(yvalues,"");
 
-        Description description = new Description();
-        description.setText("Month");
-        description.setTextSize(15);
-        pieChart.setDescription(description);
+        pieChart.getDescription().setEnabled(false);
+
+        pieChart.getLegend().setWordWrapEnabled(true);
 
         pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        //setting color
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+
+        colors.add(ColorTemplate.getHoloBlue());
+        dataSet.setColors(colors);
 
         PieData data = new PieData(dataSet);
         data.setValueTextSize(10f);

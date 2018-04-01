@@ -58,6 +58,9 @@ public class BudgetDialog extends DialogFragment {
                     //TodayFragment fragment = (TodayFragment) getActivity().getSupportFragmentManager().findFragmentByTag("TodayFragment");
                     //fragment.mBudgetValue.setText(input);
                     mOnInputSelected.sendInput(input);
+                    final String budgetValue = mBudgetInput.getText().toString();
+
+
                 }
                 getDialog().dismiss();
             }

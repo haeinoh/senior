@@ -48,10 +48,11 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
 
     private static final String TAG = "TodayFragment";
 
-
     public void sendInput(String input){
         Log.d(TAG, "sendInput: from budgetsettng: " + input);
+        //mBudgetValue.setText(input);
         mBudgetValue.setText(input);
+       // final String mbudgetvalue = mBudgetValue.getText().toString();
     }
     public TextView mBudgetValue;
 
@@ -102,6 +103,8 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: opening dialog");
+
+                final String printValue = mBudgetValue.getText().toString();
 
                 BudgetDialog dialog = new BudgetDialog();
                 dialog.setTargetFragment(TodayFragment.this, 1);
