@@ -117,7 +117,9 @@ public class IncomeDetails extends AppCompatActivity {
             DecimalFormat df = new DecimalFormat();
             df.setMaximumFractionDigits(2);
             totalIncomeValue.setText(String.valueOf(df.format(sumIncome)));
+
         }
     }
+
 
 }

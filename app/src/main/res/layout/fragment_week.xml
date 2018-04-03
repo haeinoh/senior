@@ -50,24 +50,52 @@
             android:orientation="vertical"
             android:layout_marginTop="20dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:text="Income: $100"
-                    android:textSize="17dp"
-                    android:textColor="#009933"/>
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="25dp"
+                 android:orientation="horizontal">
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="30dp"
+                         android:text="Income: $"
+                         android:textSize="17dp"
+                         android:textColor="#009933"/>
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="total income"
+                         android:textSize="17dp"
+                         android:textColor="#009933"/>
+
+             </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="30dp"
-                    android:text="Expense: $100"
+                    android:text="Expense: $"
                     android:textSize="17dp"
                     android:textColor="#e60000"/>
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="total expense"
+                    android:textSize="17dp"
+                    android:textColor="#e60000"/>
+
+                </LinearLayout>
+
+         </LinearLayout>
 
         </LinearLayout>
 

@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,12 +56,20 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
        // final String mbudgetvalue = mBudgetValue.getText().toString();
     }
     public TextView mBudgetValue;
-
+    public TextView currentExpenseAmount;
+    public TextView currentIncomeAmount;
+    public TextView currentBalance;
+    public TextView currentPercent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_today, container, false);
+
+        currentExpenseAmount = v.findViewById(R.id.currentExpenseAmount);
+        currentIncomeAmount = v.findViewById(R.id.currentIncomeAmount);
+        currentBalance = v.findViewById(R.id.currentBalance);
+        currentPercent = v.findViewById(R.id.currentPercent);
 
         //Calendar - do not remove it
         TextView yearLabel = (TextView)v.findViewById(R.id.yearLabel);
@@ -104,7 +113,7 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
             public void onClick(View view) {
                 Log.d(TAG, "onClick: opening dialog");
 
-                final String printValue = mBudgetValue.getText().toString();
+                //final String printValue = mBudgetValue.getText().toString();
 
                 BudgetDialog dialog = new BudgetDialog();
                 dialog.setTargetFragment(TodayFragment.this, 1);
@@ -188,6 +197,10 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
 
         @Override //result
         public void onPostExecute(String result){
+            double sumIncome = 0.00;
+            double sumExpense = 0.00;
+            double totalBalance = 0.00;
+            double calCurrentPercent = 0.0;
             try{
                 expenseList.clear();
                 JSONObject jsonObject = new JSONObject(result);
@@ -203,12 +216,33 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
                     expenseDate = object.getString("expenseDate");
                     Expense expense = new Expense(expenseName, expenseAmount, expenseCategory, expenseDate);
                     expenseList.add(expense);
+
+                    sumExpense = sumExpense + Double.parseDouble(expenseAmount);
+
                     count++;
                 }
                 adapter2.notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            //display total Income
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+            currentExpenseAmount.setText(String.valueOf(df.format(sumExpense)));
+            //display total Balance (sum of sumExpense and sumIncome)
+            sumIncome = 23027.99;
+            currentIncomeAmount.setText(String.valueOf(df.format(sumIncome)));
+            totalBalance = sumIncome - sumExpense;
+            currentBalance.setText(String.valueOf(df.format(totalBalance)));
+
+            //Calculate percent of budget
+            DecimalFormat df2 = new DecimalFormat();
+            df2.setMaximumFractionDigits(1);
+            //double userBudget = Double.parseDouble(String.valueOf(mBudgetValue.getText().toString()));
+            double userBudget = 1000;
+            calCurrentPercent = (userBudget/sumExpense) * 100;
+            currentPercent.setText(String.valueOf(df2.format(calCurrentPercent)));
         }
     }
 }
