@@ -74,16 +74,16 @@
                 android:layout_marginLeft="10dp"
                 android:text="Total Income: $"
                 android:textStyle="bold"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 android:textColor="#009933"/>
 
             <TextView
                 android:id="@+id/totalIncomeValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="from database"
+                android:text=""
                 android:textColor="#009933"
-                android:textSize="17sp"/>
+                android:textSize="18sp"/>
 
         </LinearLayout>
 

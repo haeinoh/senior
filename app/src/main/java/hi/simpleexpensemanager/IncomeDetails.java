@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class IncomeDetails extends AppCompatActivity {
     private ListView incomeListView;
     private IncomeListAdapter adapter;
     private List<Income> incomeList;
+    private static final String TAG_TOINCOME = "incomeAmount";
+    TextView totalIncomeValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,8 @@ public class IncomeDetails extends AppCompatActivity {
 
         adapter = new IncomeListAdapter(getApplicationContext(), incomeList);
         incomeListView.setAdapter(adapter);
+
+        totalIncomeValue = (TextView) findViewById(R.id.totalIncomeValue);
 
         //access database
         new BackgroundTask().execute();
@@ -81,6 +87,7 @@ public class IncomeDetails extends AppCompatActivity {
 
         @Override //result
         public void onPostExecute(String result){
+            double sumIncome = 0.00;
             try{
                 incomeList.clear();
                 JSONObject jsonObject = new JSONObject(result);
@@ -96,12 +103,20 @@ public class IncomeDetails extends AppCompatActivity {
                     incomeDate = object.getString("incomeDate");
                     Income income = new Income(incomeName, incomeAmount, incomeCategory, incomeDate);
                     incomeList.add(income);
+
+                    sumIncome = sumIncome + Double.parseDouble(incomeAmount);
                     count++;
+
                 }
                 adapter.notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            //display total Income
+            //DecimalFormat df = new DecimalFormat("#.##");
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+            totalIncomeValue.setText(String.valueOf(df.format(sumIncome)));
         }
     }
 
