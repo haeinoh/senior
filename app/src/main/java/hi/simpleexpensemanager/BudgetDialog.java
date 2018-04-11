@@ -13,6 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
 
 /**
  * Created by Haein on 3/13/2018.
@@ -23,6 +29,8 @@ public class BudgetDialog extends DialogFragment {
     private static final String TAG="BudgetDialog";
     private EditText mBudgetInput;
     private Button mBudgetSaveButton, mBudgetCloseButton;
+    private String budgetAmount;
+    private String mBudgetValue;
 
     public BudgetDialog(){
     }
@@ -52,17 +60,46 @@ public class BudgetDialog extends DialogFragment {
             public void onClick(View view) {
                 Log.d(TAG, "onClick: input");
 
-                String input = mBudgetInput.getText().toString();
-                if(!input.equals(""))
+                String budgetAmount = mBudgetInput.getText().toString();
+                if(!budgetAmount.equals(""))
                 {
                     //TodayFragment fragment = (TodayFragment) getActivity().getSupportFragmentManager().findFragmentByTag("TodayFragment");
                     //fragment.mBudgetValue.setText(input);
-                    mOnInputSelected.sendInput(input);
-                    final String budgetValue = mBudgetInput.getText().toString();
-
-
+                    mOnInputSelected.sendInput(budgetAmount);
                 }
-                getDialog().dismiss();
+                else{
+                    getDialog().dismiss();
+                }
+
+                Response.Listener<String> responseListener = new Response.Listener<String>(){
+
+                    @Override
+                    public void onResponse(String response) {
+                        try
+                        {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if(success)
+                            {
+                                getDialog().dismiss();
+
+                            }
+                            else
+                            {
+                                getDialog().dismiss();
+
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                AddBudget addBudget = new AddBudget(budgetAmount, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                queue.add(addBudget);
             }
         });
         return view;

@@ -45,13 +45,13 @@ public class WeekFragment extends Fragment {
     private ArrayList<String> getXAxisValues()
     {
         ArrayList<String> labels = new ArrayList<String>();
+        labels.add("SUN");
         labels.add("MON");
         labels.add("TUE");
         labels.add("WED");
         labels.add("THU");
         labels.add("FRI");
         labels.add("SAT");
-        labels.add("SUN");
 
         return labels;
     }

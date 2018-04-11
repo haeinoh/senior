@@ -1,5 +1,6 @@
 package hi.simpleexpensemanager;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,7 +43,7 @@ import java.util.Locale;
  * Use the {@link TodayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSelected */{
+public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelected {
 
     public TodayFragment() {
         // Required empty public constructor
@@ -47,22 +52,26 @@ public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSel
     private ListView expenseListView;
     private ExpenseListAdapter adapter2;
     private List<Expense> expenseList;
+    private AlertDialog dialog;
+
+    private String budgetAmount;
 
     private static final String TAG = "TodayFragment";
-/*
+
     public void sendInput(String input){
         Log.d(TAG, "sendInput: from budgetsettng: " + input);
         //mBudgetValue.setText(input);
         mBudgetValue.setText(input);
        // final String mbudgetvalue = mBudgetValue.getText().toString();
-    }*/
-    //public TextView mBudgetValue;
+    }
+    public TextView mBudgetValue;
+    //public TextView budgetValue;
     public TextView currentExpenseAmount;
     public TextView currentIncomeAmount;
     public TextView currentBalance;
     public TextView currentPercent;
-    public TextView result;
-    public EditText insertValue;
+   // public TextView result;
+   // public EditText insertValue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,30 +111,33 @@ public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSel
         adapter2 = new ExpenseListAdapter(getContext().getApplicationContext(), expenseList);
         expenseListView.setAdapter(adapter2);
 
-        result = (TextView) v.findViewById(R.id.budgetValue);
-        insertValue = (EditText) v.findViewById(R.id.insertValue);
+        //final TextView result = (TextView) v.findViewById(R.id.budgetValue);
+        //final EditText insertValue = (EditText) v.findViewById(R.id.insertValue);
 
         //budgetSetting
-        //mBudgetValue = v.findViewById(R.id.budgetValue);
+        mBudgetValue = v.findViewById(R.id.budgetValue);
+
         Button budgetSetting = (Button) v.findViewById(R.id.budgetSetting);
         budgetSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //if(result.getText().toString().equals("")){
+                /*if(result.getText().toString().equals("")){
                     String input = insertValue.getText().toString();
                     result.setText(input);
-                //}
-                //else{
-                 //   result.setText("");
-                //}
-               /* Log.d(TAG, "onClick: opening dialog");
+                }
+                else{
+                    result.setText("");
+                }*/
+               Log.d(TAG, "onClick: opening dialog");
 
-                //final String printValue = mBudgetValue.getText().toString();
+                //final String budgetValue = mBudgetValue.getText().toString();
 
                 BudgetDialog dialog = new BudgetDialog();
                 dialog.setTargetFragment(TodayFragment.this, 1);
-                dialog.show(getFragmentManager(), "BudgetDialog");*/
+                dialog.show(getFragmentManager(), "BudgetDialog");
+
+                String budgetValue = mBudgetValue.getText().toString();
             }
         });
 

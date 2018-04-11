@@ -146,14 +146,14 @@
                     android:layout_height="match_parent"
                     android:textColor="#000000"
                     android:textSize="24sp"/>
-
-                <EditText
-                    android:id="@+id/insertValue"
+<!--
+                <TextView
+                    android:id="@+id/budgetAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textColor="#000000"
                     android:textSize="24sp"/>
-
+-->
             </LinearLayout>
 
             </LinearLayout>  <!-- at the end of budget -->
