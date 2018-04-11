@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ import java.util.Locale;
  * Use the {@link TodayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelected {
+public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSelected */{
 
     public TodayFragment() {
         // Required empty public constructor
@@ -48,18 +49,20 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
     private List<Expense> expenseList;
 
     private static final String TAG = "TodayFragment";
-
+/*
     public void sendInput(String input){
         Log.d(TAG, "sendInput: from budgetsettng: " + input);
         //mBudgetValue.setText(input);
         mBudgetValue.setText(input);
        // final String mbudgetvalue = mBudgetValue.getText().toString();
-    }
-    public TextView mBudgetValue;
+    }*/
+    //public TextView mBudgetValue;
     public TextView currentExpenseAmount;
     public TextView currentIncomeAmount;
     public TextView currentBalance;
     public TextView currentPercent;
+    public TextView result;
+    public EditText insertValue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,28 +99,33 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         expenseListView = (ListView) v.findViewById(R.id.expenseListView);
         expenseList = new ArrayList<Expense>();
 
-        //expenseList.add(new Expense("Expensename", "$300", "Utility", "01/05/2018"));
-        //expenseList.add(new Expense("Expensename", "$700", "Home", "02/10/2018"));
-        //expenseList.add(new Expense("Expensename", "$70", "Phone", "03/07/2018"));
-        //expenseList.add(new Expense("Expensename", "$50", "Food", "03/10/2018"));
-        //expenseList.add(new Expense("Expensename", "$120", "Education", "03/16/2018"));
-
         adapter2 = new ExpenseListAdapter(getContext().getApplicationContext(), expenseList);
         expenseListView.setAdapter(adapter2);
 
+        result = (TextView) v.findViewById(R.id.budgetValue);
+        insertValue = (EditText) v.findViewById(R.id.insertValue);
+
         //budgetSetting
-        mBudgetValue = v.findViewById(R.id.budgetValue);
+        //mBudgetValue = v.findViewById(R.id.budgetValue);
         Button budgetSetting = (Button) v.findViewById(R.id.budgetSetting);
         budgetSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: opening dialog");
+
+                //if(result.getText().toString().equals("")){
+                    String input = insertValue.getText().toString();
+                    result.setText(input);
+                //}
+                //else{
+                 //   result.setText("");
+                //}
+               /* Log.d(TAG, "onClick: opening dialog");
 
                 //final String printValue = mBudgetValue.getText().toString();
 
                 BudgetDialog dialog = new BudgetDialog();
                 dialog.setTargetFragment(TodayFragment.this, 1);
-                dialog.show(getFragmentManager(), "BudgetDialog");
+                dialog.show(getFragmentManager(), "BudgetDialog");*/
             }
         });
 
@@ -158,11 +166,13 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
     class BackgroundTask extends AsyncTask<Void, Void, String>
     {
         String expenseTarget;
+        //String resultValue;
 
         @Override
         protected void onPreExecute()
         {
             expenseTarget = "http://greenohi.cafe24.com/ExpenseList.php";
+            //resultValue = result.getText().toString();
         }
 
         @Override
@@ -201,6 +211,7 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
             double sumExpense = 0.00;
             double totalBalance = 0.00;
             double calCurrentPercent = 0.0;
+
             try{
                 expenseList.clear();
                 JSONObject jsonObject = new JSONObject(result);
@@ -239,8 +250,8 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
             //Calculate percent of budget
             DecimalFormat df2 = new DecimalFormat();
             df2.setMaximumFractionDigits(1);
-            //double userBudget = Double.parseDouble(String.valueOf(mBudgetValue.getText().toString()));
-            double userBudget = 1000;
+            //double userBudget = Double.parseDouble(String.valueOf(result));
+            double userBudget = 2000;
             calCurrentPercent = (userBudget/sumExpense) * 100;
             currentPercent.setText(String.valueOf(df2.format(calCurrentPercent)));
         }

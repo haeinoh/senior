@@ -121,37 +121,36 @@
                     android:id="@+id/budgetSetting"
                     android:layout_width="135dp"
                     android:layout_height="30dp"
+                    android:layout_gravity="center"
                     android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_mode_edit_black_24dp"
+                    android:drawableStart="@drawable/ic_mode_edit_black_24dp"
                     android:gravity="left"
                     android:text="Set Budget"
-                    android:textSize="18dp"
                     android:textColor="@color/colorBudget"
-                    android:textStyle="bold"
-                    android:drawableStart="@drawable/ic_mode_edit_black_24dp"
-                    android:drawableLeft="@drawable/ic_mode_edit_black_24dp"
-                    android:layout_marginBottom="30dp"/>
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/budgetTest"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:text="$"
                     android:textColor="#000000"
-                    android:textSize="24sp"/>
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/budgetValue"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text=""
                     android:textColor="#000000"
                     android:textSize="24sp"/>
 
-                <TextView
-                    android:id="@+id/printValue"
+                <EditText
+                    android:id="@+id/insertValue"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text=""
                     android:textColor="#000000"
                     android:textSize="24sp"/>
 

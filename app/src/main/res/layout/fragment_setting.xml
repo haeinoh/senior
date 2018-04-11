@@ -35,14 +35,13 @@
 
         <Button
             android:id="@+id/IncomeCategoryButton"
-            android:background="@color/colorMenuFragment"
+            android:background="#b3b3b3"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:gravity="left"
             android:text="  Income Category"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textSize="20dp"
-            android:textStyle="bold"
             android:padding="5dp"
             android:layout_marginTop="30dp"
             android:drawableEnd="@drawable/ic_create_black_24dp"
@@ -50,14 +49,13 @@
 
         <Button
             android:id="@+id/ExpenseCategoryButton"
-            android:background="@color/colorMenuFragment"
+            android:background="#b3b3b3"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:gravity="left"
             android:text="  Expense Category"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textSize="20dp"
-            android:textStyle="bold"
             android:padding="5dp"
             android:layout_marginTop="20dp"
             android:drawableEnd="@drawable/ic_create_black_24dp"

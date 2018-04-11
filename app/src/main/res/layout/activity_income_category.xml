@@ -28,7 +28,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="370dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
@@ -48,12 +48,28 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center">
+
+        <EditText
+            android:id="@+id/newCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="10dp">
 
         <Button
             android:id="@+id/addCategoryButton"
@@ -63,15 +79,6 @@
             android:background="#8cd98c"
             android:layout_marginRight="10dp"
             android:text="ADD"/>
-
-        <Button
-            android:id="@+id/modifyCategoryButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#8cd98c"
-            android:layout_marginRight="10dp"
-            android:text="MODIFY"/>
 
         <Button
             android:id="@+id/deleteCategoryButton"
