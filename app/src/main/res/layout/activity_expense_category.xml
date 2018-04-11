@@ -31,9 +31,9 @@
         android:layout_height="400dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:background="@color/colorMenuFragment"
+        android:background="#ffe6e6"
         android:orientation="horizontal">
 
         <ListView
@@ -44,6 +44,43 @@
             android:divider="#ffffff"
             android:dividerHeight="3dp">
         </ListView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp">
+
+        <Button
+            android:id="@+id/addCategoryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffcccc"
+            android:layout_marginRight="10dp"
+            android:text="ADD"/>
+
+        <Button
+            android:id="@+id/modifyCategoryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffcccc"
+            android:layout_marginRight="10dp"
+            android:text="MODIFY"/>
+
+        <Button
+            android:id="@+id/deleteCategoryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffcccc"
+            android:layout_marginRight="10dp"
+            android:text="DELETE"/>
 
     </LinearLayout>
 
