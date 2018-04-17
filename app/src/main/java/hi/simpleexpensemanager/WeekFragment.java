@@ -1,6 +1,7 @@
 package hi.simpleexpensemanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -42,6 +45,8 @@ public class WeekFragment extends Fragment {
     }
     LineChart lineChart;
 
+    //public TextView currentExpenseAmount;
+
     private ArrayList<String> getXAxisValues()
     {
         ArrayList<String> labels = new ArrayList<String>();
@@ -75,6 +80,7 @@ public class WeekFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_week, container, false);
+        //currentExpenseAmount = v.findViewById(R.id.currentExpenseAmount);
 
         //Data set
         lineChart = (LineChart) v.findViewById(R.id.chart);
@@ -134,6 +140,7 @@ public class WeekFragment extends Fragment {
         lineChart.setDrawGridBackground(false);
         lineChart.animateY(1000, Easing.EasingOption.EaseInCubic);
         lineChart.invalidate();
+
 
         return v;
     }

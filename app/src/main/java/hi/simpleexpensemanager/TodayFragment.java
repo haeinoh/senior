@@ -43,7 +43,7 @@ import java.util.Locale;
  * Use the {@link TodayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelected {
+public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSelected */{
 
     public TodayFragment() {
         // Required empty public constructor
@@ -54,18 +54,20 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
     private List<Expense> expenseList;
     private AlertDialog dialog;
 
-    private String budgetAmount;
+    //private String budgetAmount;
 
     private static final String TAG = "TodayFragment";
 
     public void sendInput(String input){
         Log.d(TAG, "sendInput: from budgetsettng: " + input);
         //mBudgetValue.setText(input);
-        mBudgetValue.setText(input);
+       // mBudgetValue.setText(input);
        // final String mbudgetvalue = mBudgetValue.getText().toString();
     }
-    public TextView mBudgetValue;
-    //public TextView budgetValue;
+    //public TextView mBudgetValue;
+   //public TextView budgetValue;
+    //public TextView budgetPrint;
+    public TextView budgetTest;
     public TextView currentExpenseAmount;
     public TextView currentIncomeAmount;
     public TextView currentBalance;
@@ -82,6 +84,9 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         currentIncomeAmount = v.findViewById(R.id.currentIncomeAmount);
         currentBalance = v.findViewById(R.id.currentBalance);
         currentPercent = v.findViewById(R.id.currentPercent);
+        //budgetValue = v.findViewById(R.id.budgetValue);
+        //budgetPrint = v.findViewById(R.id.budgetPrint);
+        budgetTest = v.findViewById(R.id.budgetTest);
 
         //Calendar - do not remove it
         TextView yearLabel = (TextView)v.findViewById(R.id.yearLabel);
@@ -115,7 +120,7 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
         //final EditText insertValue = (EditText) v.findViewById(R.id.insertValue);
 
         //budgetSetting
-        mBudgetValue = v.findViewById(R.id.budgetValue);
+        //mBudgetValue = v.findViewById(R.id.budgetValue);
 
         Button budgetSetting = (Button) v.findViewById(R.id.budgetSetting);
         budgetSetting.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +142,7 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
                 dialog.setTargetFragment(TodayFragment.this, 1);
                 dialog.show(getFragmentManager(), "BudgetDialog");
 
-                String budgetValue = mBudgetValue.getText().toString();
+                //String budgetValue = mBudgetValue.getText().toString();
             }
         });
 
@@ -171,19 +176,92 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
             }
         });
         //access database
+        new ExampleTask().execute();
         new BackgroundTask().execute();
         return v;
+    }
+
+    class ExampleTask extends AsyncTask<Void,Void, String>
+    {
+        String budgetTarget;
+
+        @Override
+        protected void onPreExecute() {
+            budgetTarget = "http://greenohi.cafe24.com/CurrentBudget.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(budgetTarget);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                //save result
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                //read buffer one by one and store into temp (string)
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            double budgetPrint = 0.0;
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+                String budgetAmount;
+                if(count < jsonArray.length())
+                {   //current array element
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    budgetAmount = object.getString("budgetAmount");
+                    Budget budget = new Budget(budgetAmount);
+                    budgetPrint = Double.parseDouble(budgetAmount);
+                    //count++;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+            budgetTest.setText(String.valueOf(df.format(budgetPrint)));
+        /*
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+            budgetPrint.setText(String.valueOf(df.format(budgetAmount)));
+         */
+        }
     }
 
     class BackgroundTask extends AsyncTask<Void, Void, String>
     {
         String expenseTarget;
+        String budgetTarget;
         //String resultValue;
 
         @Override
         protected void onPreExecute()
         {
             expenseTarget = "http://greenohi.cafe24.com/ExpenseList.php";
+            budgetTarget = "http://greenohi.cafe24.com/CurrentBudget.php";
             //resultValue = result.getText().toString();
         }
 
@@ -262,10 +340,11 @@ public class TodayFragment extends Fragment implements BudgetDialog.OnInputSelec
             //Calculate percent of budget
             DecimalFormat df2 = new DecimalFormat();
             df2.setMaximumFractionDigits(1);
-            //double userBudget = Double.parseDouble(String.valueOf(result));
-            double userBudget = 2000;
+            double userBudget = Double.parseDouble(budgetTest.getText().toString());
+            //double userBudget = 2000;
             calCurrentPercent = (userBudget/sumExpense) * 100;
             currentPercent.setText(String.valueOf(df2.format(calCurrentPercent)));
         }
     }
+
 }

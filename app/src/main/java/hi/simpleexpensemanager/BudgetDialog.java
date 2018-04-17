@@ -65,7 +65,7 @@ public class BudgetDialog extends DialogFragment {
                 {
                     //TodayFragment fragment = (TodayFragment) getActivity().getSupportFragmentManager().findFragmentByTag("TodayFragment");
                     //fragment.mBudgetValue.setText(input);
-                    mOnInputSelected.sendInput(budgetAmount);
+                    //mOnInputSelected.sendInput(budgetAmount);
                 }
                 else{
                     getDialog().dismiss();
@@ -82,12 +82,10 @@ public class BudgetDialog extends DialogFragment {
                             if(success)
                             {
                                 getDialog().dismiss();
-
                             }
                             else
                             {
                                 getDialog().dismiss();
-
                             }
                         }
                         catch (Exception e)

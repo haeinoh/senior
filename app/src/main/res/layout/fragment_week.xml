@@ -46,32 +46,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="20dp">
-
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="25dp"
-                 android:orientation="horizontal">
-
-                     <TextView
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:layout_marginLeft="30dp"
-                         android:text="Income: $"
-                         android:textSize="17dp"
-                         android:textColor="#009933"/>
-
-                     <TextView
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="total income"
-                         android:textSize="17dp"
-                         android:textColor="#009933"/>
-
-             </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -87,13 +64,32 @@
                     android:textColor="#e60000"/>
 
                 <TextView
+                    android:id="@+id/currentExpenseAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="total expense"
                     android:textSize="17dp"
                     android:textColor="#e60000"/>
 
                 </LinearLayout>
+
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:orientation="horizontal"
+                 android:layout_gravity="center"
+                 android:gravity="center"
+                 android:layout_marginTop="5dp">
+
+                     <Button
+                         android:id="@+id/expenseDetailsButton"
+                         android:layout_width="wrap_content"
+                         android:layout_height="30dp"
+                         android:text="Details >>"
+                         android:textSize="19dp"
+                         android:background="#ff1a1a"
+                         android:textColor="#ffffff"/>
+
+             </LinearLayout>
 
          </LinearLayout>
 
