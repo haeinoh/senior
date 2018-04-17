@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.github.mikephil.charting.animation.Easing;
@@ -22,7 +23,14 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.lang.reflect.Array;
 import java.security.KeyStore;
+import java.text.DateFormat;
+import java.time.Month;
+import java.time.MonthDay;
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 
 /**
@@ -38,6 +46,8 @@ public class MonthFragment extends Fragment {
     public MonthFragment() {
         // Required empty public constructor
     }
+    private HorizontalCalendar horizontalCalendar;
+
     PieChart pieChart;
 
     @Override
@@ -45,6 +55,40 @@ public class MonthFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_month, container, false);
+
+        //Calendar
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.DAY_OF_MONTH);
+        /* starts before 1 month from now */
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.MONTH, -1);
+
+        /* ends after 1 month from now */
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.MONTH, 1);
+
+        //set up horizontalcalendar in fragment through its builder
+        horizontalCalendar = new HorizontalCalendar.Builder(v, R.id.monthCalendar)
+                .range(startDate, endDate)
+                .datesNumberOnScreen(1)
+                .mode(HorizontalCalendar.Mode.MONTHS)
+                .configure()
+                    .formatBottomText("yyyy")
+                    .formatMiddleText("MMM")
+                    .showTopText(false)
+                    .showBottomText(true)
+                .end()
+                //.defaultSelectedDate();
+                .build();
+
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
+            @Override
+            public void onDateSelected(Calendar date, int position) {
+                //do something
+            }
+        });
+
+        //Pie chart
 
         pieChart = (PieChart) v.findViewById(R.id.piechart);
 

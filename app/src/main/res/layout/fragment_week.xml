@@ -28,13 +28,29 @@
 
         </LinearLayout>
 
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginLeft="5dp"
+           android:layout_marginRight="5dp"
+           android:layout_marginTop="20dp">
+
+        <devs.mulham.horizontalcalendar.HorizontalCalendarView
+                android:id="@+id/weekcalendar"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@color/colorPrimary"/>
+
+       </LinearLayout>
+
         <LinearLayout
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_width="match_parent"
-            android:layout_height="330dp"
+            android:layout_height="315dp"
             android:orientation="vertical">
 
         <com.github.mikephil.charting.charts.LineChart
@@ -44,12 +60,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp">
-
+ <!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
@@ -71,28 +82,7 @@
                     android:textColor="#e60000"/>
 
                 </LinearLayout>
-
-             <LinearLayout
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:orientation="horizontal"
-                 android:layout_gravity="center"
-                 android:gravity="center"
-                 android:layout_marginTop="5dp">
-
-                     <Button
-                         android:id="@+id/expenseDetailsButton"
-                         android:layout_width="wrap_content"
-                         android:layout_height="30dp"
-                         android:text="Details >>"
-                         android:textSize="19dp"
-                         android:background="#ff1a1a"
-                         android:textColor="#ffffff"/>
-
-             </LinearLayout>
-
+-->
          </LinearLayout>
-
-        </LinearLayout>
 
 </RelativeLayout>

@@ -24,10 +24,17 @@ import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+//import com.google.api.services.calendar.Calendar;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Calendar;
+import java.util.*;
+
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.model.CalendarEvent;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 
 /**
@@ -43,6 +50,10 @@ public class WeekFragment extends Fragment {
     public WeekFragment() {
         // Required empty public constructor
     }
+
+    private HorizontalCalendar horizontalCalendar;
+    //private View rootView;
+
     LineChart lineChart;
 
     //public TextView currentExpenseAmount;
@@ -82,12 +93,47 @@ public class WeekFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_week, container, false);
         //currentExpenseAmount = v.findViewById(R.id.currentExpenseAmount);
 
+        //Calendar
+        /* starts before 1 month from now */
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.MONTH, -1);
+
+        /* ends after 1 month from now */
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.MONTH, 1);
+
+        //set up horizontalcalendar in fragment through its builder
+            horizontalCalendar = new HorizontalCalendar.Builder(v, R.id.weekcalendar)
+                .range(startDate, endDate)
+                .datesNumberOnScreen(7)
+                /*
+                    .configure()    // starts configuration.
+                    .formatTopText(String dateFormat)       // default to "MMM".
+                    .formatMiddleText(String dateFormat)    // default to "dd".
+                    .formatBottomText(String dateFormat)    // default to "EEE".
+                    .showTopText(boolean show)              // show or hide TopText (default to true).
+                        .showBottomText(boolean show)           // show or hide BottomText (default to true).
+                        .textColor(int normalColor, int selectedColor)    // default to (Color.LTGRAY, Color.WHITE).
+                        .selectedDateBackground(Drawable background)      // set selected date cell background.
+                    .selectorColor(int color)               // set selection indicator bar's color (default to colorAccent).
+                    .end()          // ends configuration.
+                    */
+                .build();
+
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
+            @Override
+            public void onDateSelected(Calendar date, int position) {
+                //do something
+            }
+        });
+
+        //Line Chart
         //Data set
         lineChart = (LineChart) v.findViewById(R.id.chart);
 
         ArrayList<Entry> entries = new ArrayList<>();
         entries.add(new Entry(0,37));
-        entries.add(new Entry(1,18));
+        entries.add(new Entry(1,58));
         entries.add(new Entry(2,150));
         entries.add(new Entry(3,45));
         entries.add(new Entry(4,10));

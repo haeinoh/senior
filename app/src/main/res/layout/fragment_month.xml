@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="hi.simpleexpensemanager.MonthFragment">
 
     <LinearLayout
@@ -29,8 +30,30 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="20dp">
+
+            <devs.mulham.horizontalcalendar.HorizontalCalendarView
+                android:id="@+id/monthCalendar"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@color/colorPrimary"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                app:textColorNormal="#000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
 
            <com.github.mikephil.charting.charts.PieChart
                android:id="@+id/piechart"
