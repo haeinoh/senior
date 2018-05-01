@@ -294,13 +294,13 @@ public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSel
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
-                String monthIncome;
+                String incomeAmount;
                 if(count < jsonArray.length())
                 {   //current array element
                     JSONObject object = jsonArray.getJSONObject(count);
-                    monthIncome = object.getString("SumMonth");
-                    MonthIncome monthSum = new MonthIncome(monthIncome);
-                    monthPrint = Double.parseDouble(monthIncome);
+                    incomeAmount = object.getString("incomeAmount");
+                    MonthIncome monthSum = new MonthIncome(incomeAmount);
+                    monthPrint = Double.parseDouble(incomeAmount);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -358,7 +358,7 @@ public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSel
 
         @Override //result
         public void onPostExecute(String result){
-            double sumIncome = 0.00;
+            //double sumIncome = 0.00;
             double sumExpense = 0.00;
             double totalBalance = 0.00;
             double calCurrentPercent = 0.0;
@@ -393,8 +393,7 @@ public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSel
             df.setMaximumFractionDigits(2);
             currentExpenseAmount.setText(String.valueOf(df.format(sumExpense)));
             //display total Balance (sum of sumExpense and sumIncome)
-            sumIncome = 23027.99;
-            currentIncomeAmount.setText(String.valueOf(df.format(sumIncome)));
+            double sumIncome = Double.parseDouble(currentIncomeAmount.getText().toString());
             totalBalance = sumIncome - sumExpense;
             currentBalance.setText(String.valueOf(df.format(totalBalance)));
 
@@ -406,23 +405,23 @@ public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSel
             calCurrentPercent = (sumExpense/userBudget) * 100;
             currentPercent.setText(String.valueOf(df2.format(calCurrentPercent)));
 
-            if(calCurrentPercent > 100.00)
+            if(calCurrentPercent > 100)
             {
                 currentPercent.setTextColor(Color.parseColor("#e60000"));
             }
-            else if(calCurrentPercent <= 100.00 && calCurrentPercent > 75.00)
+            else if(calCurrentPercent > 75 && calCurrentPercent <= 100)
             {
-                currentPercent.setTextColor(Color.parseColor("#e6005c"));
+                currentPercent.setTextColor(Color.parseColor("#ff6600"));
             }
-            else if(calCurrentPercent <= 75.00 && calCurrentPercent > 50.00)
+            else if(calCurrentPercent <= 75 && calCurrentPercent > 50)
             {
-                currentPercent.setTextColor(Color.parseColor("#ff3300"));
+                currentPercent.setTextColor(Color.parseColor("#cc3399"));
             }
-            else if(calCurrentPercent <= 50.00 && calCurrentPercent > 25.00)
+            else if(calCurrentPercent <= 50 && calCurrentPercent > 25)
             {
                 currentPercent.setTextColor(Color.parseColor("#006600"));
             }
-            else if(calCurrentPercent <= 25.00 && calCurrentPercent > 10.00)
+            else if(calCurrentPercent <= 25 && calCurrentPercent > 10)
             {
                 currentPercent.setTextColor(Color.parseColor("#005c99"));
             }

@@ -5,17 +5,17 @@ package hi.simpleexpensemanager;
  */
 
 public class MonthIncome {
-    String MonthIncome;
+    String incomeAmount;
 
-    public MonthIncome(String monthIncome) {
-        MonthIncome = monthIncome;
+    public MonthIncome(String incomeAmount) {
+        this.incomeAmount = incomeAmount;
     }
 
-    public String getMonthIncome() {
-        return MonthIncome;
+    public String getincomeAmount() {
+        return incomeAmount;
     }
 
-    public void setMonthIncome(String monthIncome) {
-        MonthIncome = monthIncome;
+    public void setincomeAmount(String incomeAmount) {
+        this.incomeAmount = incomeAmount;
     }
 }
