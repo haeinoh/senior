@@ -82,7 +82,7 @@
                 <TextView
                     android:layout_width="135dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/of_budget"
+                    android:text="% of budget"
                     android:textSize="20dp"
                     android:gravity="left"
                     android:layout_gravity="center"
@@ -98,7 +98,8 @@
                     android:text=""
                     android:textColor="#000000"
                     android:textSize="24sp"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/budgetTestPercent"
@@ -164,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginTop="5dp"
-                android:text="Current Income : $ "
+                android:text="Month Income : $ "
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -192,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginTop="5dp"
-                    android:text="Current Expense : $"
+                    android:text="Month Expense : $"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -225,7 +226,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginTop="5dp"
-                android:text="Balance : $"
+                android:text="Month Balance : $"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />

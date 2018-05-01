@@ -2,6 +2,7 @@ package hi.simpleexpensemanager;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -177,6 +178,7 @@ public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSel
         });
         //access database
         new ExampleTask().execute();
+        new IncomeTask().execute();
         new BackgroundTask().execute();
         return v;
     }
@@ -243,25 +245,84 @@ public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSel
             DecimalFormat df = new DecimalFormat();
             df.setMaximumFractionDigits(2);
             budgetTest.setText(String.valueOf(df.format(budgetPrint)));
-        /*
+        }
+    }
+
+    class IncomeTask extends AsyncTask<Void,Void, String>
+    {
+        String incomeTarget;
+
+        @Override
+        protected void onPreExecute() {
+            incomeTarget = "http://greenohi.cafe24.com/MonthIncome.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(incomeTarget);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                //save result
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                //read buffer one by one and store into temp (string)
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            double monthPrint = 0.0;
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+                String monthIncome;
+                if(count < jsonArray.length())
+                {   //current array element
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    monthIncome = object.getString("SumMonth");
+                    MonthIncome monthSum = new MonthIncome(monthIncome);
+                    monthPrint = Double.parseDouble(monthIncome);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             DecimalFormat df = new DecimalFormat();
             df.setMaximumFractionDigits(2);
-            budgetPrint.setText(String.valueOf(df.format(budgetAmount)));
-         */
+            currentIncomeAmount.setText(String.valueOf(df.format(monthPrint)));
         }
     }
 
     class BackgroundTask extends AsyncTask<Void, Void, String>
     {
         String expenseTarget;
-        String budgetTarget;
+        //String budgetTarget;
         //String resultValue;
 
         @Override
         protected void onPreExecute()
         {
             expenseTarget = "http://greenohi.cafe24.com/ExpenseList.php";
-            budgetTarget = "http://greenohi.cafe24.com/CurrentBudget.php";
+            //budgetTarget = "http://greenohi.cafe24.com/CurrentBudget.php";
             //resultValue = result.getText().toString();
         }
 
@@ -342,8 +403,33 @@ public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSel
             df2.setMaximumFractionDigits(1);
             double userBudget = Double.parseDouble(budgetTest.getText().toString());
             //double userBudget = 2000;
-            calCurrentPercent = (userBudget/sumExpense) * 100;
+            calCurrentPercent = (sumExpense/userBudget) * 100;
             currentPercent.setText(String.valueOf(df2.format(calCurrentPercent)));
+
+            if(calCurrentPercent > 100.00)
+            {
+                currentPercent.setTextColor(Color.parseColor("#e60000"));
+            }
+            else if(calCurrentPercent <= 100.00 && calCurrentPercent > 75.00)
+            {
+                currentPercent.setTextColor(Color.parseColor("#e6005c"));
+            }
+            else if(calCurrentPercent <= 75.00 && calCurrentPercent > 50.00)
+            {
+                currentPercent.setTextColor(Color.parseColor("#ff3300"));
+            }
+            else if(calCurrentPercent <= 50.00 && calCurrentPercent > 25.00)
+            {
+                currentPercent.setTextColor(Color.parseColor("#006600"));
+            }
+            else if(calCurrentPercent <= 25.00 && calCurrentPercent > 10.00)
+            {
+                currentPercent.setTextColor(Color.parseColor("#005c99"));
+            }
+            else
+            {
+                currentPercent.setTextColor(Color.BLACK);
+            }
         }
     }
 
