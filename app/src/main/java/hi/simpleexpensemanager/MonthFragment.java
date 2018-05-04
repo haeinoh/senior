@@ -363,6 +363,9 @@ public class MonthFragment extends Fragment {
 
                 pieChart.setData(data);
                 data.setValueFormatter(new PercentFormatter());
+
+                pieChart.notifyDataSetChanged();
+                pieChart.invalidate();
             } catch (Exception e) {
                 e.printStackTrace();
             }
