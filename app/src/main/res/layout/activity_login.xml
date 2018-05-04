@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="Simple Expense Manager"
-            android:textColor="#1a1a1a"
+            android:textColor="@color/colorMain"
             android:textSize="25dp"
             android:textStyle="bold" />
 

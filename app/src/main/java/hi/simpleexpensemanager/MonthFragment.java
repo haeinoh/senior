@@ -3,33 +3,51 @@ package hi.simpleexpensemanager;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.KeyStore;
 import java.text.DateFormat;
 import java.time.Month;
 import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.HorizontalCalendarView;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 
@@ -48,7 +66,9 @@ public class MonthFragment extends Fragment {
     }
     private HorizontalCalendar horizontalCalendar;
 
-    PieChart pieChart;
+    public PieChart pieChart;
+   // public TextView textView;
+   // public TextView textView2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,7 +89,7 @@ public class MonthFragment extends Fragment {
 
         //set up horizontalcalendar in fragment through its builder
         horizontalCalendar = new HorizontalCalendar.Builder(v, R.id.monthCalendar)
-                .range(startDate, endDate)
+                 .range(startDate, endDate)
                 .datesNumberOnScreen(1)
                 .mode(HorizontalCalendar.Mode.MONTHS)
                 .configure()
@@ -81,68 +101,381 @@ public class MonthFragment extends Fragment {
                 //.defaultSelectedDate();
                 .build();
 
+        pieChart = (PieChart) v.findViewById(R.id.piechart);
+        //textView = (TextView) v.findViewById(R.id.testText);
+        //textView2 = (TextView) v.findViewById(R.id.test2Text);
+
+
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
-            @Override
-            public void onDateSelected(Calendar date, int position) {
-                //do something
-            }
+                @Override
+         public void onDateSelected(Calendar date, int position) {
+
+                if(position == 0)
+                {
+                    new MonthList().execute();
+                    pieChart.notifyDataSetChanged();
+                    pieChart.invalidate();
+                }
+                if(position == 1)
+                {
+                    new MonthList2().execute();
+                    pieChart.notifyDataSetChanged();
+                    pieChart.invalidate();
+                }
+                else if(position == 2)
+                {
+                    new MonthList3().execute();
+                    pieChart.notifyDataSetChanged();
+                    pieChart.invalidate();
+                }
+                //textView.setText("Selected Position: " + position);
+         }
+/*
+        @Override
+            public void onCalendarScroll(HorizontalCalendarView calendarView, int dx, int dy)
+        {
+            textView.setText("Selected dx: " + dx);
+            textView.setText("Selected dy: " + dy);
+        }
+        */
         });
 
         //Pie chart
 
-        pieChart = (PieChart) v.findViewById(R.id.piechart);
-
-        pieChart.setUsePercentValues(true);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5,10,5,5);
-        pieChart.setDragDecelerationFrictionCoef(0.95f);
-
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.TRANSPARENT);
-        pieChart.setHoleRadius(30f);
-        pieChart.setTransparentCircleRadius(0);
-
-        ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
-
-            yvalues.add(new PieEntry(6f, "Utility"));
-            yvalues.add(new PieEntry(15f, "Education"));
-            yvalues.add(new PieEntry(12f, "Clothing"));
-            yvalues.add(new PieEntry(7f,  "Savings"));
-            yvalues.add(new PieEntry(27f, "Food"));
-            yvalues.add(new PieEntry(13f, "Home"));
-            yvalues.add(new PieEntry(7f, "Entertainment"));
-
-        PieDataSet dataSet = new PieDataSet(yvalues,"");
-
-        pieChart.getDescription().setEnabled(false);
-
-        pieChart.getLegend().setWordWrapEnabled(true);
-
-        pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
-
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(5f);
-        //setting color
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
-        dataSet.setColors(colors);
-
-        PieData data = new PieData(dataSet);
-        data.setValueTextSize(10f);
-
-        pieChart.setData(data);
-        data.setValueFormatter(new PercentFormatter());
-
         return v;
+    }
+
+
+    class MonthList extends AsyncTask<Void,Void, String>
+    {
+        String monthTarget;
+
+        @Override
+        protected void onPreExecute() {
+            monthTarget = "http://greenohi.cafe24.com/MonthExpense.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(monthTarget);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                //save result
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                //read buffer one by one and store into temp (string)
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //ArrayList<PieEntry> xvalues = new ArrayList<>();
+            ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+                String expenseAmount;
+                String expenseCategory;
+                float f;
+                while(count < jsonArray.length())
+                {   //current array element
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    expenseAmount = object.getString("expenseAmount");
+                    expenseCategory = object.getString("expenseCategory");
+                    MonthExpense monthExpense = new MonthExpense(expenseAmount, expenseCategory);
+                    f= Float.parseFloat(expenseAmount);
+
+                    yvalues.add(new PieEntry(f, expenseCategory));
+
+                    count++;
+                }
+
+                pieChart.setUsePercentValues(true);
+                pieChart.getDescription().setEnabled(false);
+                pieChart.setExtraOffsets(5,10,5,5);
+                pieChart.setDragDecelerationFrictionCoef(0.95f);
+
+                pieChart.setDrawHoleEnabled(true);
+                pieChart.setHoleColor(Color.TRANSPARENT);
+                pieChart.setHoleRadius(30f);
+                pieChart.setTransparentCircleRadius(0);
+
+
+                PieDataSet dataSet = new PieDataSet(yvalues,"");
+
+                pieChart.getDescription().setEnabled(false);
+
+                pieChart.getLegend().setWordWrapEnabled(true);
+
+                pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+
+                dataSet.setSliceSpace(3f);
+                dataSet.setSelectionShift(5f);
+                //setting color
+                ArrayList<Integer> colors = new ArrayList<Integer>();
+
+                for (int c : ColorTemplate.PASTEL_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.JOYFUL_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.VORDIPLOM_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.LIBERTY_COLORS)
+                    colors.add(c);
+
+                colors.add(ColorTemplate.getHoloBlue());
+                dataSet.setColors(colors);
+
+                PieData data = new PieData(dataSet);
+                data.setValueTextSize(10f);
+
+                pieChart.setData(data);
+                data.setValueFormatter(new PercentFormatter());
+
+                pieChart.notifyDataSetChanged();
+                pieChart.invalidate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class MonthList2 extends AsyncTask<Void,Void, String>
+    {
+        String monthTarget;
+
+        @Override
+        protected void onPreExecute() {
+            monthTarget = "http://greenohi.cafe24.com/MonthExpense2.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(monthTarget);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                //save result
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                //read buffer one by one and store into temp (string)
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //ArrayList<PieEntry> xvalues = new ArrayList<>();
+            ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+                String expenseAmount;
+                String expenseCategory;
+                float f;
+                while(count < jsonArray.length())
+                {   //current array element
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    expenseAmount = object.getString("expenseAmount");
+                    expenseCategory = object.getString("expenseCategory");
+                    MonthExpense2 monthExpense2 = new MonthExpense2(expenseAmount, expenseCategory);
+                    f= Float.parseFloat(expenseAmount);
+
+                    yvalues.add(new PieEntry(f, expenseCategory));
+
+                    count++;
+                }
+
+                pieChart.setUsePercentValues(true);
+                pieChart.getDescription().setEnabled(false);
+                pieChart.setExtraOffsets(5,10,5,5);
+                pieChart.setDragDecelerationFrictionCoef(0.95f);
+
+                pieChart.setDrawHoleEnabled(true);
+                pieChart.setHoleColor(Color.TRANSPARENT);
+                pieChart.setHoleRadius(30f);
+                pieChart.setTransparentCircleRadius(0);
+
+
+                PieDataSet dataSet = new PieDataSet(yvalues,"");
+
+                pieChart.getDescription().setEnabled(false);
+
+                pieChart.getLegend().setWordWrapEnabled(true);
+
+                pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+
+                dataSet.setSliceSpace(3f);
+                dataSet.setSelectionShift(5f);
+                //setting color
+                ArrayList<Integer> colors = new ArrayList<Integer>();
+
+                for (int c : ColorTemplate.PASTEL_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.JOYFUL_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.VORDIPLOM_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.LIBERTY_COLORS)
+                    colors.add(c);
+
+                colors.add(ColorTemplate.getHoloBlue());
+                dataSet.setColors(colors);
+
+                PieData data = new PieData(dataSet);
+                data.setValueTextSize(10f);
+
+                pieChart.setData(data);
+                data.setValueFormatter(new PercentFormatter());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class MonthList3 extends AsyncTask<Void,Void, String>
+    {
+        String monthTarget;
+
+        @Override
+        protected void onPreExecute() {
+            monthTarget = "http://greenohi.cafe24.com/MonthExpense3.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(monthTarget);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                //save result
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                //read buffer one by one and store into temp (string)
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //ArrayList<PieEntry> xvalues = new ArrayList<>();
+            ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+                String expenseAmount;
+                String expenseCategory;
+                float f;
+                while(count < jsonArray.length())
+                {   //current array element
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    expenseAmount = object.getString("expenseAmount");
+                    expenseCategory = object.getString("expenseCategory");
+                    MonthExpense2 monthExpense2 = new MonthExpense2(expenseAmount, expenseCategory);
+                    f= Float.parseFloat(expenseAmount);
+
+                    yvalues.add(new PieEntry(f, expenseCategory));
+
+                    count++;
+                }
+
+                pieChart.setUsePercentValues(true);
+                pieChart.getDescription().setEnabled(false);
+                pieChart.setExtraOffsets(5,10,5,5);
+                pieChart.setDragDecelerationFrictionCoef(0.95f);
+
+                pieChart.setDrawHoleEnabled(true);
+                pieChart.setHoleColor(Color.TRANSPARENT);
+                pieChart.setHoleRadius(30f);
+                pieChart.setTransparentCircleRadius(0);
+
+
+                PieDataSet dataSet = new PieDataSet(yvalues,"");
+
+                pieChart.getDescription().setEnabled(false);
+
+                pieChart.getLegend().setWordWrapEnabled(true);
+
+                pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+
+                dataSet.setSliceSpace(3f);
+                dataSet.setSelectionShift(5f);
+                //setting color
+                ArrayList<Integer> colors = new ArrayList<Integer>();
+
+                for (int c : ColorTemplate.PASTEL_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.JOYFUL_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.VORDIPLOM_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.LIBERTY_COLORS)
+                    colors.add(c);
+
+                colors.add(ColorTemplate.getHoloBlue());
+                dataSet.setColors(colors);
+
+                PieData data = new PieData(dataSet);
+                data.setValueTextSize(10f);
+
+                pieChart.setData(data);
+                data.setValueFormatter(new PercentFormatter());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -12,4 +12,5 @@
     <color name="colorMenuDark">#3385ff</color>
     <color name="colorBudget">#0047b3</color>
     <color name="colorCurrent">#e6ecff</color>
+    <color name="colorMain">#4e6690</color>
 </resources>
