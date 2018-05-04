@@ -65,7 +65,7 @@ public class WeekFragment extends Fragment {
     //private View rootView;
 
     public LineChart lineChart;
-
+    public TextView textView;
     //public TextView currentExpenseAmount;
 
     private ArrayList<String> getXAxisValues()
@@ -130,65 +130,34 @@ public class WeekFragment extends Fragment {
                     */
                 .build();
 
+        textView = v.findViewById(R.id.testText);
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 //do something
+                if(position >=22 && position <= 26){
+                    new WeekListP1().execute();
+                }
+                if(position >=27 && position <= 33 )
+                {
+                    new WeekList().execute();
+                }
+                if(position >= 34 && position <= 40)
+                {
+                    new WeekList2().execute();
+                }
+                if(position >= 41 && position <= 47)
+                {
+                    new WeekList3().execute();
+                }
+                textView.setText("Week Expense: " + position);
             }
         });
 
         //Line Chart
         //Data set
         lineChart = (LineChart) v.findViewById(R.id.chart);
-/*
-        ArrayList<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(0,37));
-        entries.add(new Entry(1,58));
-        entries.add(new Entry(2,150));
-        entries.add(new Entry(3,45));
-        entries.add(new Entry(4,10));
-        entries.add(new Entry(5,99));
-        entries.add(new Entry(6,78));
 
-        //x-axis label
-        LineDataSet lineDataSet = new LineDataSet(entries, "$");
-
-        LineData lineData = new LineData(lineDataSet);
-        lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        lineChart.setData(lineData); //set the data and list of labels into chart
-
-
-        lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
-
-        //set circle
-        lineDataSet.setLineWidth(2);
-        lineDataSet.setCircleRadius(6);
-        lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
-        lineDataSet.setCircleColorHole(Color.BLUE);
-        lineDataSet.setColor(Color.parseColor("#FFA1B4DC"));
-
-        lineDataSet.setDrawCircleHole(true);
-        lineDataSet.setDrawCircles(true);
-        lineDataSet.setValueTextSize(10);
-        lineDataSet.setValueFormatter(new MyValueFormatter());
-
-        //set y-axis
-        YAxis yLAxis = lineChart.getAxisLeft();
-        yLAxis.setTextColor(Color.BLACK);
-        //only left
-        YAxis yRAxis = lineChart.getAxisRight();
-        yRAxis.setDrawLabels(false);
-        yRAxis.setDrawAxisLine(false);
-        yRAxis.setDrawGridLines(false);
-
-        lineChart.getDescription().setEnabled(false);
-
-        lineChart.setDoubleTapToZoomEnabled(false);
-        lineChart.setDrawGridBackground(false);
-        lineChart.animateY(1000, Easing.EasingOption.EaseInCubic);
-        lineChart.notifyDataSetChanged();
-        lineChart.invalidate();
-*/
         new WeekList().execute();
 
         return v;
@@ -263,6 +232,319 @@ public class WeekFragment extends Fragment {
                 lineChart.setData(lineData); //set the data and list of labels into chart
 
                lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
+
+                //set circle
+                lineDataSet.setLineWidth(2);
+                lineDataSet.setCircleRadius(6);
+                lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
+                lineDataSet.setCircleColorHole(Color.BLUE);
+                lineDataSet.setColor(Color.parseColor("#FFA1B4DC"));
+
+                lineDataSet.setDrawCircleHole(true);
+                lineDataSet.setDrawCircles(true);
+                lineDataSet.setValueTextSize(10);
+                lineDataSet.setValueFormatter(new MyValueFormatter());
+
+                //set y-axis
+                YAxis yLAxis = lineChart.getAxisLeft();
+                yLAxis.setTextColor(Color.BLACK);
+                //only left
+                YAxis yRAxis = lineChart.getAxisRight();
+                yRAxis.setDrawLabels(false);
+                yRAxis.setDrawAxisLine(false);
+                yRAxis.setDrawGridLines(false);
+
+                lineChart.getDescription().setEnabled(false);
+
+                lineChart.setDoubleTapToZoomEnabled(false);
+                lineChart.setDrawGridBackground(false);
+                lineChart.animateY(1000, Easing.EasingOption.EaseInCubic);
+
+                lineChart.notifyDataSetChanged();
+                lineChart.invalidate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class WeekList2 extends AsyncTask<Void,Void, String>
+    {
+        String weekTarget;
+
+        @Override
+        protected void onPreExecute() {
+            weekTarget = "http://greenohi.cafe24.com/WeekExpense2.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(weekTarget);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                //save result
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                //read buffer one by one and store into temp (string)
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            ArrayList<Entry> entries = new ArrayList<Entry>();
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+                String expenseAmount;
+                float f;
+                while(count < jsonArray.length())
+                {   //current array element
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    expenseAmount = object.getString("expenseAmount");
+                    WeekExpense2 weekExpense2 = new WeekExpense2(expenseAmount);
+                    f= Float.parseFloat(expenseAmount);
+
+                        entries.add(new Entry(count, f));
+
+                    count++;
+                }
+                //x-axis label
+
+
+                LineDataSet lineDataSet = new LineDataSet(entries, "$");
+
+                LineData lineData = new LineData(lineDataSet);
+                lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+                lineChart.setData(lineData); //set the data and list of labels into chart
+
+                lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
+
+                //set circle
+                lineDataSet.setLineWidth(2);
+                lineDataSet.setCircleRadius(6);
+                lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
+                lineDataSet.setCircleColorHole(Color.BLUE);
+                lineDataSet.setColor(Color.parseColor("#FFA1B4DC"));
+
+                lineDataSet.setDrawCircleHole(true);
+                lineDataSet.setDrawCircles(true);
+                lineDataSet.setValueTextSize(10);
+                lineDataSet.setValueFormatter(new MyValueFormatter());
+
+                //set y-axis
+                YAxis yLAxis = lineChart.getAxisLeft();
+                yLAxis.setTextColor(Color.BLACK);
+                //only left
+                YAxis yRAxis = lineChart.getAxisRight();
+                yRAxis.setDrawLabels(false);
+                yRAxis.setDrawAxisLine(false);
+                yRAxis.setDrawGridLines(false);
+
+                lineChart.getDescription().setEnabled(false);
+
+                lineChart.setDoubleTapToZoomEnabled(false);
+                lineChart.setDrawGridBackground(false);
+                lineChart.animateY(1000, Easing.EasingOption.EaseInCubic);
+
+                lineChart.notifyDataSetChanged();
+                lineChart.invalidate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class WeekList3 extends AsyncTask<Void,Void, String>
+    {
+        String weekTarget;
+
+        @Override
+        protected void onPreExecute() {
+            weekTarget = "http://greenohi.cafe24.com/WeekExpense3.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(weekTarget);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                //save result
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                //read buffer one by one and store into temp (string)
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            ArrayList<Entry> entries = new ArrayList<Entry>();
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+                String expenseAmount;
+                float f;
+                while(count < jsonArray.length())
+                {   //current array element
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    expenseAmount = object.getString("expenseAmount");
+                    WeekExpense weekExpense = new WeekExpense(expenseAmount);
+                    f= Float.parseFloat(expenseAmount);
+
+                    entries.add(new Entry(count, f));
+
+                    count++;
+                }
+                //x-axis label
+
+
+                LineDataSet lineDataSet = new LineDataSet(entries, "$");
+
+                LineData lineData = new LineData(lineDataSet);
+                lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+                lineChart.setData(lineData); //set the data and list of labels into chart
+
+                lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
+
+                //set circle
+                lineDataSet.setLineWidth(2);
+                lineDataSet.setCircleRadius(6);
+                lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
+                lineDataSet.setCircleColorHole(Color.BLUE);
+                lineDataSet.setColor(Color.parseColor("#FFA1B4DC"));
+
+                lineDataSet.setDrawCircleHole(true);
+                lineDataSet.setDrawCircles(true);
+                lineDataSet.setValueTextSize(10);
+                lineDataSet.setValueFormatter(new MyValueFormatter());
+
+                //set y-axis
+                YAxis yLAxis = lineChart.getAxisLeft();
+                yLAxis.setTextColor(Color.BLACK);
+                //only left
+                YAxis yRAxis = lineChart.getAxisRight();
+                yRAxis.setDrawLabels(false);
+                yRAxis.setDrawAxisLine(false);
+                yRAxis.setDrawGridLines(false);
+
+                lineChart.getDescription().setEnabled(false);
+
+                lineChart.setDoubleTapToZoomEnabled(false);
+                lineChart.setDrawGridBackground(false);
+                lineChart.animateY(1000, Easing.EasingOption.EaseInCubic);
+
+                lineChart.notifyDataSetChanged();
+                lineChart.invalidate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class WeekListP1 extends AsyncTask<Void,Void, String>
+    {
+        String weekTarget;
+
+        @Override
+        protected void onPreExecute() {
+            weekTarget = "http://greenohi.cafe24.com/WeekExpenseP1.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(weekTarget);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                //save result
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                //read buffer one by one and store into temp (string)
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            ArrayList<Entry> entries = new ArrayList<Entry>();
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+                String expenseAmount;
+                float f;
+                while(count < jsonArray.length())
+                {   //current array element
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    expenseAmount = object.getString("expenseAmount");
+                    WeekExpense2 weekExpense2 = new WeekExpense2(expenseAmount);
+                    f= Float.parseFloat(expenseAmount);
+                    entries.add(new Entry(count, f));
+                    count++;
+                }
+                //x-axis label
+
+
+                LineDataSet lineDataSet = new LineDataSet(entries, "$");
+
+                LineData lineData = new LineData(lineDataSet);
+                lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+                lineChart.setData(lineData); //set the data and list of labels into chart
+
+                lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
 
                 //set circle
                 lineDataSet.setLineWidth(2);

@@ -113,20 +113,15 @@ public class MonthFragment extends Fragment {
                 if(position == 0)
                 {
                     new MonthList().execute();
-                    pieChart.notifyDataSetChanged();
-                    pieChart.invalidate();
                 }
                 if(position == 1)
                 {
                     new MonthList2().execute();
-                    pieChart.notifyDataSetChanged();
-                    pieChart.invalidate();
                 }
                 else if(position == 2)
                 {
                     new MonthList3().execute();
-                    pieChart.notifyDataSetChanged();
-                    pieChart.invalidate();
+
                 }
                 //textView.setText("Selected Position: " + position);
          }
@@ -476,6 +471,9 @@ public class MonthFragment extends Fragment {
 
                 pieChart.setData(data);
                 data.setValueFormatter(new PercentFormatter());
+
+                pieChart.notifyDataSetChanged();
+                pieChart.invalidate();
             } catch (Exception e) {
                 e.printStackTrace();
             }
