@@ -62,11 +62,9 @@ public class WeekFragment extends Fragment {
     }
 
     private HorizontalCalendar horizontalCalendar;
-    //private View rootView;
 
     public LineChart lineChart;
     public TextView textView;
-    //public TextView currentExpenseAmount;
 
     private ArrayList<String> getXAxisValues()
     {
@@ -116,18 +114,6 @@ public class WeekFragment extends Fragment {
             horizontalCalendar = new HorizontalCalendar.Builder(v, R.id.weekcalendar)
                 .range(startDate, endDate)
                 .datesNumberOnScreen(7)
-                /*
-                    .configure()    // starts configuration.
-                    .formatTopText(String dateFormat)       // default to "MMM".
-                    .formatMiddleText(String dateFormat)    // default to "dd".
-                    .formatBottomText(String dateFormat)    // default to "EEE".
-                    .showTopText(boolean show)              // show or hide TopText (default to true).
-                        .showBottomText(boolean show)           // show or hide BottomText (default to true).
-                        .textColor(int normalColor, int selectedColor)    // default to (Color.LTGRAY, Color.WHITE).
-                        .selectedDateBackground(Drawable background)      // set selected date cell background.
-                    .selectorColor(int color)               // set selection indicator bar's color (default to colorAccent).
-                    .end()          // ends configuration.
-                    */
                 .build();
 
         textView = v.findViewById(R.id.testText);

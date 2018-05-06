@@ -37,6 +37,17 @@ public class SettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
 
+        Button HowToUseButton = (Button) v.findViewById(R.id.HowToUseButton);
+        HowToUseButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent howToIntent = new Intent(getActivity(), HowTo.class);
+                startActivity(howToIntent);
+            }
+        });
+
+
         Button addIncomeButton = (Button) v.findViewById(R.id.IncomeCategoryButton);
         addIncomeButton.setOnClickListener(new View.OnClickListener() {
 

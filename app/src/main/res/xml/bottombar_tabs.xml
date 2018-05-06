@@ -22,7 +22,7 @@
         <tab
             id="@+id/menu_setting"
             icon="@drawable/ic_settings_black_24dp"
-            title="SETTING"
+            title="SETTINGS"
             activeColor="@color/colorMenuDark"/>
     </tabs>
 
