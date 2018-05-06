@@ -221,8 +221,6 @@ public class MonthFragment extends Fragment {
 
                 pieChart.getLegend().setWordWrapEnabled(true);
 
-                pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
-
                 dataSet.setSliceSpace(3f);
                 dataSet.setSelectionShift(5f);
                 //setting color
@@ -230,11 +228,11 @@ public class MonthFragment extends Fragment {
 
                 for (int c : ColorTemplate.PASTEL_COLORS)
                     colors.add(c);
+                for (int c : ColorTemplate.MATERIAL_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.COLORFUL_COLORS)
+                    colors.add(c);
                 for (int c : ColorTemplate.JOYFUL_COLORS)
-                    colors.add(c);
-                for (int c : ColorTemplate.VORDIPLOM_COLORS)
-                    colors.add(c);
-                for (int c : ColorTemplate.LIBERTY_COLORS)
                     colors.add(c);
 
                 colors.add(ColorTemplate.getHoloBlue());
@@ -245,6 +243,7 @@ public class MonthFragment extends Fragment {
 
                 pieChart.setData(data);
                 data.setValueFormatter(new PercentFormatter());
+                pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
                 pieChart.notifyDataSetChanged();
                 pieChart.invalidate();
@@ -334,7 +333,6 @@ public class MonthFragment extends Fragment {
 
                 pieChart.getLegend().setWordWrapEnabled(true);
 
-                pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
                 dataSet.setSliceSpace(3f);
                 dataSet.setSelectionShift(5f);
@@ -343,12 +341,13 @@ public class MonthFragment extends Fragment {
 
                 for (int c : ColorTemplate.PASTEL_COLORS)
                     colors.add(c);
+                for (int c : ColorTemplate.MATERIAL_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.COLORFUL_COLORS)
+                    colors.add(c);
                 for (int c : ColorTemplate.JOYFUL_COLORS)
                     colors.add(c);
-                for (int c : ColorTemplate.VORDIPLOM_COLORS)
-                    colors.add(c);
-                for (int c : ColorTemplate.LIBERTY_COLORS)
-                    colors.add(c);
+
 
                 colors.add(ColorTemplate.getHoloBlue());
                 dataSet.setColors(colors);
@@ -358,6 +357,7 @@ public class MonthFragment extends Fragment {
 
                 pieChart.setData(data);
                 data.setValueFormatter(new PercentFormatter());
+                pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
                 pieChart.notifyDataSetChanged();
                 pieChart.invalidate();
@@ -447,7 +447,6 @@ public class MonthFragment extends Fragment {
 
                 pieChart.getLegend().setWordWrapEnabled(true);
 
-                pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
                 dataSet.setSliceSpace(3f);
                 dataSet.setSelectionShift(5f);
@@ -456,12 +455,13 @@ public class MonthFragment extends Fragment {
 
                 for (int c : ColorTemplate.PASTEL_COLORS)
                     colors.add(c);
+                for (int c : ColorTemplate.MATERIAL_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.COLORFUL_COLORS)
+                    colors.add(c);
                 for (int c : ColorTemplate.JOYFUL_COLORS)
                     colors.add(c);
-                for (int c : ColorTemplate.VORDIPLOM_COLORS)
-                    colors.add(c);
-                for (int c : ColorTemplate.LIBERTY_COLORS)
-                    colors.add(c);
+
 
                 colors.add(ColorTemplate.getHoloBlue());
                 dataSet.setColors(colors);
@@ -471,6 +471,7 @@ public class MonthFragment extends Fragment {
 
                 pieChart.setData(data);
                 data.setValueFormatter(new PercentFormatter());
+                pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
                 pieChart.notifyDataSetChanged();
                 pieChart.invalidate();

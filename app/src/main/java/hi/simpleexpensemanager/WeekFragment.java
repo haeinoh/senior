@@ -131,26 +131,26 @@ public class WeekFragment extends Fragment {
                 .build();
 
         textView = v.findViewById(R.id.testText);
+
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 //do something
-                if(position >=22 && position <= 26){
+                if(position >=19 && position <= 25){
                     new WeekListP1().execute();
                 }
-                if(position >=27 && position <= 33 )
+                if(position >=26 && position <= 32 )
                 {
                     new WeekList().execute();
                 }
-                if(position >= 34 && position <= 40)
+                if(position >= 33 && position <= 39)
                 {
                     new WeekList2().execute();
                 }
-                if(position >= 41 && position <= 47)
+                if(position >= 40 && position <= 46)
                 {
                     new WeekList3().execute();
                 }
-                textView.setText("Week Expense: " + position);
             }
         });
 
@@ -205,6 +205,7 @@ public class WeekFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             ArrayList<Entry> entries = new ArrayList<Entry>();
+            double sumExpense = 0.0;
             try{
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
@@ -219,11 +220,11 @@ public class WeekFragment extends Fragment {
                     f= Float.parseFloat(expenseAmount);
 
                     entries.add(new Entry(count, f));
+                    sumExpense = sumExpense + Double.parseDouble(expenseAmount);
 
                     count++;
                 }
                 //x-axis label
-
 
                 LineDataSet lineDataSet = new LineDataSet(entries, "$");
 
@@ -265,6 +266,11 @@ public class WeekFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+
+            textView.setText(" Week Expense : $" + String.valueOf(df.format(sumExpense)));
         }
     }
 
@@ -310,6 +316,8 @@ public class WeekFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             ArrayList<Entry> entries = new ArrayList<Entry>();
+            double sumExpense = 0.0;
+
             try{
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
@@ -324,6 +332,7 @@ public class WeekFragment extends Fragment {
                     f= Float.parseFloat(expenseAmount);
 
                         entries.add(new Entry(count, f));
+                    sumExpense = sumExpense + Double.parseDouble(expenseAmount);
 
                     count++;
                 }
@@ -370,6 +379,10 @@ public class WeekFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+
+            textView.setText(" Week Expense : $" + String.valueOf(df.format(sumExpense)));
         }
     }
 
@@ -415,6 +428,7 @@ public class WeekFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             ArrayList<Entry> entries = new ArrayList<Entry>();
+            double sumExpense = 0.00;
             try{
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
@@ -429,6 +443,7 @@ public class WeekFragment extends Fragment {
                     f= Float.parseFloat(expenseAmount);
 
                     entries.add(new Entry(count, f));
+                    sumExpense = sumExpense + Double.parseDouble(expenseAmount);
 
                     count++;
                 }
@@ -475,6 +490,10 @@ public class WeekFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+
+            textView.setText(" Week Expense : $" + String.valueOf(df.format(sumExpense)));
         }
     }
 
@@ -520,6 +539,7 @@ public class WeekFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             ArrayList<Entry> entries = new ArrayList<Entry>();
+            double sumExpense = 0.00;
             try{
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
@@ -533,6 +553,9 @@ public class WeekFragment extends Fragment {
                     WeekExpense2 weekExpense2 = new WeekExpense2(expenseAmount);
                     f= Float.parseFloat(expenseAmount);
                     entries.add(new Entry(count, f));
+
+                    sumExpense = sumExpense + Double.parseDouble(expenseAmount);
+
                     count++;
                 }
                 //x-axis label
@@ -578,6 +601,10 @@ public class WeekFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+
+            textView.setText(" Week Expense : $" + String.valueOf(df.format(sumExpense)));
         }
     }
 }
