@@ -144,7 +144,7 @@ public class WeekFragment extends Fragment {
         //Data set
         lineChart = (LineChart) v.findViewById(R.id.chart);
 
-        new WeekList().execute();
+        new WeekList2().execute();
 
         return v;
     }

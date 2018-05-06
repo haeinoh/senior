@@ -89,7 +89,7 @@ public class MonthFragment extends Fragment {
 
         //set up horizontalcalendar in fragment through its builder
         horizontalCalendar = new HorizontalCalendar.Builder(v, R.id.monthCalendar)
-                 .range(startDate, endDate)
+                .range(startDate, endDate)
                 .datesNumberOnScreen(1)
                 .mode(HorizontalCalendar.Mode.MONTHS)
                 .configure()
@@ -102,14 +102,10 @@ public class MonthFragment extends Fragment {
                 .build();
 
         pieChart = (PieChart) v.findViewById(R.id.piechart);
-        //textView = (TextView) v.findViewById(R.id.testText);
-        //textView2 = (TextView) v.findViewById(R.id.test2Text);
-
 
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
                 @Override
          public void onDateSelected(Calendar date, int position) {
-
                 if(position == 0)
                 {
                     new MonthList().execute();
@@ -121,21 +117,14 @@ public class MonthFragment extends Fragment {
                 else if(position == 2)
                 {
                     new MonthList3().execute();
-
                 }
                 //textView.setText("Selected Position: " + position);
          }
-/*
-        @Override
-            public void onCalendarScroll(HorizontalCalendarView calendarView, int dx, int dy)
-        {
-            textView.setText("Selected dx: " + dx);
-            textView.setText("Selected dy: " + dy);
-        }
-        */
         });
 
         //Pie chart
+        pieChart = (PieChart) v.findViewById(R.id.piechart);
+        new MonthList2().execute();
 
         return v;
     }
