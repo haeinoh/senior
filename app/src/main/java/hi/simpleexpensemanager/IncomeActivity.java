@@ -102,7 +102,7 @@ public class IncomeActivity extends AppCompatActivity {
                 String incomeCategory = spinner.getSelectedItem().toString();
                 String incomeDate = mDisplayDate.getText().toString();
 
-                /*if(incomeName.equals("") || incomeAmount.equals("") || incomeCategory.equals("") || incomeDate.equals(""))
+                if(incomeName.equals("") || incomeAmount.equals("") || incomeCategory.equals("") || incomeDate.equals(""))
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(IncomeActivity.this);
                     dialog = builder.setMessage("Blank is not allowed")
@@ -110,7 +110,7 @@ public class IncomeActivity extends AppCompatActivity {
                             .create();
                     dialog.show();
                     return;
-                }*/
+                }
                 Response.Listener<String> responseListener = new Response.Listener<String>(){
 
                     @Override

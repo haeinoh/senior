@@ -97,7 +97,7 @@ public class ExpenseActivity extends AppCompatActivity {
                 String expenseCategory = spinner.getSelectedItem().toString();
                 String expenseDate = mDisplayDate.getText().toString();
 
-               /*if(expenseName.equals("") || expenseAmount.equals("") || expenseCategory.equals("") || expenseDate.equals(""))
+               if(expenseName.equals("") || expenseAmount.equals("") || expenseCategory.equals("") || expenseDate.equals(""))
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ExpenseActivity.this);
                     dialog = builder.setMessage("Blank is not allowed")
@@ -105,7 +105,7 @@ public class ExpenseActivity extends AppCompatActivity {
                             .create();
                     dialog.show();
                     return;
-                }*/
+                }
                 Response.Listener<String> responseListener = new Response.Listener<String>(){
 
                     @Override

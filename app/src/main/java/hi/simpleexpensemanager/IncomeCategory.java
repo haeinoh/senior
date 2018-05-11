@@ -1,5 +1,7 @@
 package hi.simpleexpensemanager;
 
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,23 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +58,7 @@ public class IncomeCategory extends AppCompatActivity {
         //choice mode single
         incomeCategoryView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 */
+
         category = new ArrayList<String>();
         category.add("General Income");
         category.add("Salary");
@@ -74,6 +94,7 @@ public class IncomeCategory extends AppCompatActivity {
                 String item = newCategory.getText().toString();
                 if(item != null || item.trim().length() > 0){
                     category.add(item.trim());
+                   // IncomeActivity.adapter.add(item.trim());
                     adapter.notifyDataSetChanged();
                     newCategory.setText("");
                 }
@@ -96,5 +117,75 @@ public class IncomeCategory extends AppCompatActivity {
                 }
             }
         });
+
+       // new IncomeCategorySync().execute();
     }
+/*
+    class IncomeCategorySync extends AsyncTask<Void,Void, String>
+    {
+        String incomeTarget;
+
+        @Override
+        protected void onPreExecute() {
+            incomeTarget = "http://greenohi.cafe24.com/IncomeArray.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(incomeTarget);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                //save result
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                //read buffer one by one and store into temp (string)
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            List<String> categoryList = new ArrayList<String>();
+            double sumExpense = 0.0;
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+                String categoryName;
+                float f;
+                while(count < jsonArray.length())
+                {   //current array element
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    categoryName = object.getString("categoryName");
+                    CategoryName categoryList = new CategoryName(categoryName);
+
+                    category.add(new String(categoryName));
+
+                    count++;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+*/
 }

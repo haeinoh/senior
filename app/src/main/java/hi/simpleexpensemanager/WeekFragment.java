@@ -137,6 +137,10 @@ public class WeekFragment extends Fragment {
                 {
                     new WeekList3().execute();
                 }
+                if(position >= 47 && position <= 53)
+                {
+                    new WeekList4().execute();
+                }
             }
         });
 
@@ -482,6 +486,118 @@ public class WeekFragment extends Fragment {
             textView.setText(" Week Expense : $" + String.valueOf(df.format(sumExpense)));
         }
     }
+
+    class WeekList4 extends AsyncTask<Void,Void, String>
+    {
+        String weekTarget;
+
+        @Override
+        protected void onPreExecute() {
+            weekTarget = "http://greenohi.cafe24.com/WeekExpense4.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(weekTarget);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                //save result
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                //read buffer one by one and store into temp (string)
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            ArrayList<Entry> entries = new ArrayList<Entry>();
+            double sumExpense = 0.00;
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+                String expenseAmount;
+                float f;
+                while(count < jsonArray.length())
+                {   //current array element
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    expenseAmount = object.getString("expenseAmount");
+                    WeekExpense weekExpense = new WeekExpense(expenseAmount);
+                    f= Float.parseFloat(expenseAmount);
+
+                    entries.add(new Entry(count, f));
+                    sumExpense = sumExpense + Double.parseDouble(expenseAmount);
+
+                    count++;
+                }
+                //x-axis label
+
+
+                LineDataSet lineDataSet = new LineDataSet(entries, "$");
+
+                LineData lineData = new LineData(lineDataSet);
+                lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+                lineChart.setData(lineData); //set the data and list of labels into chart
+
+                lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
+
+                //set circle
+                lineDataSet.setLineWidth(2);
+                lineDataSet.setCircleRadius(6);
+                lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
+                lineDataSet.setCircleColorHole(Color.BLUE);
+                lineDataSet.setColor(Color.parseColor("#FFA1B4DC"));
+
+                lineDataSet.setDrawCircleHole(true);
+                lineDataSet.setDrawCircles(true);
+                lineDataSet.setValueTextSize(10);
+                lineDataSet.setValueFormatter(new MyValueFormatter());
+
+                //set y-axis
+                YAxis yLAxis = lineChart.getAxisLeft();
+                yLAxis.setTextColor(Color.BLACK);
+                //only left
+                YAxis yRAxis = lineChart.getAxisRight();
+                yRAxis.setDrawLabels(false);
+                yRAxis.setDrawAxisLine(false);
+                yRAxis.setDrawGridLines(false);
+
+                lineChart.getDescription().setEnabled(false);
+
+                lineChart.setDoubleTapToZoomEnabled(false);
+                lineChart.setDrawGridBackground(false);
+                lineChart.animateY(1000, Easing.EasingOption.EaseInCubic);
+
+                lineChart.notifyDataSetChanged();
+                lineChart.invalidate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+
+            textView.setText(" Week Expense : $" + String.valueOf(df.format(sumExpense)));
+        }
+    }
+
 
     class WeekListP1 extends AsyncTask<Void,Void, String>
     {
