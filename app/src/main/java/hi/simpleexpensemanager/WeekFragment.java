@@ -122,24 +122,24 @@ public class WeekFragment extends Fragment {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 //do something
-                if(position >=19 && position <= 25){
-                    new WeekListP1().execute();
-                }
-                if(position >=26 && position <= 32 )
-                {
+                if(position >=18 && position <= 23){
                     new WeekList().execute();
                 }
-                if(position >= 33 && position <= 39)
+                if(position >=24 && position <= 30 )
                 {
                     new WeekList2().execute();
                 }
-                if(position >= 40 && position <= 46)
+                if(position >= 31 && position <= 37)
                 {
                     new WeekList3().execute();
                 }
-                if(position >= 47 && position <= 53)
+                if(position >= 38 && position <= 44)
                 {
                     new WeekList4().execute();
+                }
+                if(position >= 45 && position <= 51)
+                {
+                    new WeekListP1().execute();
                 }
             }
         });
@@ -147,8 +147,7 @@ public class WeekFragment extends Fragment {
         //Line Chart
         //Data set
         lineChart = (LineChart) v.findViewById(R.id.chart);
-
-        new WeekList2().execute();
+        new WeekList3().execute();
 
         return v;
     }

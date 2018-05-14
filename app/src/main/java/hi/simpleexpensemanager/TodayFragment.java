@@ -401,7 +401,6 @@ public class TodayFragment extends Fragment /*implements BudgetDialog.OnInputSel
             DecimalFormat df2 = new DecimalFormat();
             df2.setMaximumFractionDigits(1);
             double userBudget = Double.parseDouble(budgetTest.getText().toString());
-            //double userBudget = 2000;
             calCurrentPercent = (sumExpense/userBudget) * 100;
             currentPercent.setText(String.valueOf(df2.format(calCurrentPercent)));
 
