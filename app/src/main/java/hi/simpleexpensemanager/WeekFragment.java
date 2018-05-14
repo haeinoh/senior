@@ -122,7 +122,11 @@ public class WeekFragment extends Fragment {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 //do something
-                if(position >=18 && position <= 23){
+                if(position >=10 && position <= 16)
+                {
+                    new WeekListP1().execute();
+                }
+                if(position >=17 && position <= 23){
                     new WeekList().execute();
                 }
                 if(position >=24 && position <= 30 )
@@ -137,11 +141,7 @@ public class WeekFragment extends Fragment {
                 {
                     new WeekList4().execute();
                 }
-                if(position >= 45 && position <= 51)
-                {
-                    new WeekListP1().execute();
-                }
-            }
+           }
         });
 
         //Line Chart
@@ -215,13 +215,14 @@ public class WeekFragment extends Fragment {
                 }
                 //x-axis label
 
+
                 LineDataSet lineDataSet = new LineDataSet(entries, "$");
 
                 LineData lineData = new LineData(lineDataSet);
                 lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
                 lineChart.setData(lineData); //set the data and list of labels into chart
 
-               lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
+                lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
 
                 //set circle
                 lineDataSet.setLineWidth(2);
@@ -549,7 +550,6 @@ public class WeekFragment extends Fragment {
                 }
                 //x-axis label
 
-
                 LineDataSet lineDataSet = new LineDataSet(entries, "$");
 
                 LineData lineData = new LineData(lineDataSet);
@@ -587,6 +587,7 @@ public class WeekFragment extends Fragment {
 
                 lineChart.notifyDataSetChanged();
                 lineChart.invalidate();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -660,6 +661,7 @@ public class WeekFragment extends Fragment {
                     count++;
                 }
                 //x-axis label
+
 
 
                 LineDataSet lineDataSet = new LineDataSet(entries, "$");
