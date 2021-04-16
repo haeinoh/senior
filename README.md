@@ -1,5 +1,4 @@
 # Simple Expense Manager
-Senior Capstone Project  | Simple Expense Manager
 
 Senior Project Capstone (CINS 490)
 - Developing 'Simple Expense Manager' Android Application with Android Studio
